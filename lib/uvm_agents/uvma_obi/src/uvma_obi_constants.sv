@@ -27,6 +27,8 @@ const int unsigned  uvma_obi_default_ruser_width = `UVMA_OBI_RUSER_DEFAULT_WIDTH
 const int unsigned  uvma_obi_default_addr_width  = `UVMA_OBI_ADDR_DEFAULT_WIDTH ; // Measured in bits (b)
 const int unsigned  uvma_obi_default_data_width  = `UVMA_OBI_DATA_DEFAULT_WIDTH ; // Measured in bits (b)
 const int unsigned  uvma_obi_default_id_width    = `UVMA_OBI_ID_DEFAULT_WIDTH   ; // Measured in bits (b)
+const int unsigned  uvma_obi_default_achk_width  = `UVMA_OBI_ACHK_DEFAULT_WIDTH ; // Measured in bits (b)
+const int unsigned  uvma_obi_default_rchk_width  = `UVMA_OBI_RCHK_DEFAULT_WIDTH ; // Measured in bits (b)
 
 
 `endif // __UVMA_OBI_CONSTANTS_SV__
