@@ -52,6 +52,7 @@ interface uvma_obi_if #(
    wire [(ID_WIDTH-1):0]        aid    ; ///< Address Phase transaction identifier.
    wire [5:0]                   atop   ; ///< Atomic Operation.
    wire [1:0]                   memtype; ///< Memory type attributes.
+   wire [2:0]                   prot   ; ///< Protection attributes.
    wire                         reqpar ; ///< Parity bit for req signal (odd parity).
    wire                         gntpar ; ///< Parity bit for gnt signal (odd parity).
    wire [(ACHK_WIDTH-1):0]      achk   ; ///< Checksum for address phase signals (except achk itself).
@@ -84,42 +85,42 @@ interface uvma_obi_if #(
               exokay   ,
               rvalidpar,
               rchk     ;
-      output  req    ,
-              addr   ,
-              we     ,
-              be     ,
-              wdata  ,
-              auser  ,
-              wuser  ,
-              aid    ,
-              atop   ,
-              memtype,
-              prot   ,
-              reqpar ,
-              achk   ,
-              rready ,
-              rchk   ;
+      output  req      ,
+              addr     ,
+              we       ,
+              be       ,
+              wdata    ,
+              auser    ,
+              wuser    ,
+              aid      ,
+              atop     ,
+              memtype  ,
+              prot     ,
+              reqpar   ,
+              achk     ,
+              rready   ,
+              rreadypar;
    endclocking : dut_mstr_cb
    
    /**
     * Used by DUT in 'slv' mode.
     */
    clocking dut_slv_cb @(posedge clk);
-      input   req    ,
-              addr   ,
-              we     ,
-              be     ,
-              wdata  ,
-              auser  ,
-              wuser  ,
-              aid    ,
-              atop   ,
-              memtype,
-              prot   ,
-              reqpar ,
-              achk   ,
-              rready ,
-              rchk   ;
+      input   req      ,
+              addr     ,
+              we       ,
+              be       ,
+              wdata    ,
+              auser    ,
+              wuser    ,
+              aid      ,
+              atop     ,
+              memtype  ,
+              prot     ,
+              reqpar   ,
+              achk     ,
+              rready   ,
+              rreadypar;
       output  gnt      ,
               gntpar   ,
               rvalid   ,
@@ -146,42 +147,42 @@ interface uvma_obi_if #(
               exokay   ,
               rvalidpar,
               rchk     ;
-      output  req    ,
-              addr   ,
-              we     ,
-              be     ,
-              wdata  ,
-              auser  ,
-              wuser  ,
-              aid    ,
-              atop   ,
-              memtype,
-              prot   ,
-              reqpar ,
-              achk   ,
-              rready ,
-              rchk   ;
+      output  req      ,
+              addr     ,
+              we       ,
+              be       ,
+              wdata    ,
+              auser    ,
+              wuser    ,
+              aid      ,
+              atop     ,
+              memtype  ,
+              prot     ,
+              reqpar   ,
+              achk     ,
+              rready   ,
+              rreadypar;
    endclocking : drv_mstr_cb
    
    /**
     * Used by uvma_obi_drv_c.
     */
    clocking drv_slv_cb @(posedge clk);
-      input   req    ,
-              addr   ,
-              we     ,
-              be     ,
-              wdata  ,
-              auser  ,
-              wuser  ,
-              aid    ,
-              atop   ,
-              memtype,
-              prot   ,
-              reqpar ,
-              achk   ,
-              rready ,
-              rchk   ;
+      input   req      ,
+              addr     ,
+              we       ,
+              be       ,
+              wdata    ,
+              auser    ,
+              wuser    ,
+              aid      ,
+              atop     ,
+              memtype  ,
+              prot     ,
+              reqpar   ,
+              achk     ,
+              rready   ,
+              rreadypar;
       output  gnt      ,
               gntpar   ,
               rvalid   ,

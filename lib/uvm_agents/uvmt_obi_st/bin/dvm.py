@@ -49,6 +49,7 @@ import stat
 dbg = False
 pwd             = os.getcwd()
 vivado_path     = "/tools/Xilinx/Vivado/2020.2/bin/"
+#vivado_path     = "C:/Xilinx/Vivado/2019.2/bin/"
 uvm_dpi_so      = "uvm_dpi"
 project_dir     = pwd + "/../../../../"
 rtl_path        = project_dir + "/rtl"
@@ -56,7 +57,7 @@ rtl_libs_path   = rtl_path + "/.imports"
 uvm_agents_path = project_dir + "/lib/uvm_agents"
 dv_imports_path = project_dir + "/lib/uvm_libs/mio"
 sim_debug       = True#False
-sim_gui         = True
+sim_gui         = False
 sim_waves       = False
 
 
@@ -195,7 +196,7 @@ def do_cmp_dv(filelist_path, lib_name):
     print("Compiling DV")
     print("************")
     
-    run_xsim_bin("xvlog", "--incr -sv -f " + filelist_path + " -L uvm --work " + lib_name + "=out/" + lib_name + " --log ./out/compilation.log")
+    run_xsim_bin("xvlog", "--incr -sv -f " + filelist_path + " -L uvm --work " + lib_name + "=" + lib_name + " --log ./out/compilation.log")
 
 
 
@@ -221,7 +222,7 @@ def do_elab_dv(lib_name, design_unit):
     else:
         debug_str = ""
     
-    run_xsim_bin("xelab", lib_name + "." + design_unit + debug_str + " --incr -relax --O0 -v 0 -s " + design_unit + " -timescale 1ns/1ps -L " + lib_name + "=./out/" + lib_name + " --log ./out/elaboration.log")
+    run_xsim_bin("xelab", lib_name + "." + design_unit + " " + lib_name + "." + "uvml_logs_sim_summary " + debug_str + " --incr -relax --O0 -v 0 -s " + design_unit + " -timescale 1ns/1ps -L " + lib_name + "=" + lib_name + " --log ./out/elaboration.log")
     
 
 
