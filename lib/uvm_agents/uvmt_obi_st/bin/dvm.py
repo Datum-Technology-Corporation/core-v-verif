@@ -116,7 +116,7 @@ def do_dispatch(args):
         if not os.path.exists(out_path):
             os.mkdir(out_path)
         do_cmp_rtl(args['<target>'])
-        do_cmp_dv (dv_path + "/" + args['<target>'] + "/src/" + args['<target>'] + "_pkg.flist.xsim", args['<target>'])
+        do_cmp_dv (uvm_agents_path + "/" + args['<target>'] + "/src/" + args['<target>'] + "_pkg.flist.xsim", args['<target>'])
     if args['elab']:
         do_elab_rtl(args['<target>'])
         do_elab_dv (args['<target>'], args['<target>'] + "_tb")
@@ -238,6 +238,9 @@ def do_sim(snapshot, test_name, seed, args):
     act_args = ""
     for arg in args:
         act_args = act_args + " -testplusarg \"" + arg + "\""
+    
+    if not os.path.exists(pwd + "/results/"):
+        os.mkdir(pwd + "/results/")
     
     tests_results_path = pwd + "/results/" + test_name + "_" + str(seed)
     if not os.path.exists(tests_results_path):
