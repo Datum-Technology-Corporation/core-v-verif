@@ -27,6 +27,7 @@ Usage:
   dvm.py cpel <target>
   dvm.py sim  <target>  [-t <test_name>]  [-s <seed>]  [-g | --gui]  [-w | --waves]
   dvm.py clean
+  dvm.py update
   dvm.py (-h | --help)
   dvm.py --version
 
@@ -42,16 +43,18 @@ from docopt     import docopt
 import os
 import subprocess
 import shutil
+from os import path
+import stat
 
 dbg = False
 pwd             = os.getcwd()
 vivado_path     = "/tools/Xilinx/Vivado/2020.2/bin/"
 uvm_dpi_so      = "uvm_dpi"
-project_dir     = pwd + "/.."
+project_dir     = pwd + "/../../../../"
 rtl_path        = project_dir + "/rtl"
 rtl_libs_path   = rtl_path + "/.imports"
-dv_path         = project_dir + "/dv"
-dv_imports_path = dv_path + "/.imports"
+uvm_agents_path = project_dir + "/lib/uvm_agents"
+dv_imports_path = project_dir + "/lib/uvm_libs/mio"
 sim_debug       = True#False
 sim_gui         = True
 sim_waves       = False
@@ -119,6 +122,8 @@ def do_dispatch(args):
         do_elab_dv (args['<target>'], args['<target>'] + "_tb")
     if args['sim']:
         do_sim(args['<target>'] + "_tb", args['<target>'] + "_" + args['<test_name>'] + "_test", args['<seed>'], [])
+    if args['update']:
+        do_update()
 
 
 
@@ -150,9 +155,9 @@ def do_paths():
     set_env_var("DV_UVMT_AXIL_ST_SRC_PATH" , dv_imports_path + "/uvmt_axil_st"  + "/src")
     
     # Source
-    set_env_var("DV_UVMA_OBI_SRC_PATH"   , dv_path + "/uvma_obi"    + "/src")
-    set_env_var("DV_UVME_OBI_ST_SRC_PATH", dv_path + "/uvme_obi_st" + "/src")
-    set_env_var("DV_UVMT_OBI_ST_SRC_PATH", dv_path + "/uvmt_obi_st" + "/src")
+    set_env_var("DV_UVMA_OBI_SRC_PATH"   , uvm_agents_path + "/uvma_obi"    + "/src")
+    set_env_var("DV_UVME_OBI_ST_SRC_PATH", uvm_agents_path + "/uvme_obi_st" + "/src")
+    set_env_var("DV_UVMT_OBI_ST_SRC_PATH", uvm_agents_path + "/uvmt_obi_st" + "/src")
 
 
 def set_env_var(name, value):
@@ -280,6 +285,66 @@ def run_xsim_bin(name, args):
         print("System call is " + bin_path + " " + args)
     subprocess.call(bin_path + " " + args, shell=True)
 
+
+
+def do_update():
+    temp_path = "./tmp"
+    mio_ip_base_path = pwd + "/../../../uvm_libs/mio"
+    
+    for root, dirs, files in os.walk(temp_path + "/mio_ip_base"):  
+        for dir in dirs:
+            os.chmod(path.join(root, dir), stat.S_IRWXU)
+        for file in files:
+            os.chmod(path.join(root, file), stat.S_IRWXU)
+    
+    
+    # Remove old libs and temp directories
+    if os.path.exists(temp_path):
+        shutil.rmtree(temp_path)
+
+    if os.path.exists(mio_ip_base_path):
+        shutil.rmtree(mio_ip_base_path)
+    
+    if not os.path.exists(temp_path):
+        os.mkdir(temp_path)
+    
+    # Clone repo(s) and remove extra dirs
+    subprocess.call("git clone https://github.com/Datum-Technology-Corporation/mio_ip_base.git " + temp_path + "/mio_ip_base", shell=True)
+    
+    if os.path.exists(temp_path + "/mio_ip_base/dv/.imports"):
+        shutil.rmtree(temp_path + "/mio_ip_base/dv/.imports")
+    
+    if os.path.exists(temp_path + "/mio_ip_base/dv/.git"):
+        shutil.rmtree(temp_path + "/mio_ip_base/dv/.git")
+    
+    os.mkdir(mio_ip_base_path)
+    
+    copy_tree(temp_path + "/mio_ip_base/dv", mio_ip_base_path)
+    
+    
+    for root, dirs, files in os.walk(temp_path + "/mio_ip_base"):  
+        for dir in dirs:
+            os.chmod(path.join(root, dir), stat.S_IRWXU)
+        for file in files:
+            os.chmod(path.join(root, file), stat.S_IRWXU)
+    
+    try:
+        shutil.rmtree(temp_path)
+    except:
+        print("Failed to clean up all temporary files (" + temp_path + ")")
+
+
+
+
+def copy_tree(src, dst, symlinks=False, ignore=None):
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
+    
 
 
 if __name__ == '__main__':
