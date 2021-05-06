@@ -48,8 +48,6 @@ import stat
 
 dbg = False
 pwd             = os.getcwd()
-vivado_path     = "/tools/Xilinx/Vivado/2020.2/bin/"
-#vivado_path     = "C:/Xilinx/Vivado/2019.2/bin/"
 uvm_dpi_so      = "uvm_dpi"
 project_dir     = pwd + "/../../../../"
 rtl_path        = project_dir + "/rtl"
@@ -60,6 +58,14 @@ sim_debug       = True#False
 sim_gui         = False
 sim_waves       = False
 
+
+vivado_path     = os.environ.get('VIVADO_PATH')
+if (vivado_path == None):
+    vivado_path = "/tools/Xilinx/Vivado/2020.2/bin/"   
+    #vivado_path = "F:/Xilinx/Vivado/2020.3/bin/"
+    print ("VIVADO_PATH env var not set, using " + vivado_path)
+else:
+    print ("VIVADO_PATH env var is " + vivado_path)
 
 
 def do_dispatch(args):

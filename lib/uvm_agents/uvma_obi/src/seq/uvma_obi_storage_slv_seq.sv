@@ -155,14 +155,24 @@ task uvma_obi_storage_slv_seq_c::do_response(ref uvma_obi_mon_trn_c mon_req);
                end
             end
          end
-         `uvm_do_with(_req, {
-            _req.access_type    == UVMA_OBI_ACCESS_WRITE;
-            _req.err            == error;
-            _req.gnt_latency    == 1;
-            _req.access_latency == 1;
-            _req.hold_duration  == 1;
-            _req.tail_length    == 1;
-         })
+         // The following code is currently incompatible with xsim (2020.3)
+         // Temporary replacement below
+         //`uvm_do_with(_req, {
+         //   _req.access_type    == UVMA_OBI_ACCESS_WRITE;
+         //   _req.err            == error;
+         //   _req.gnt_latency    == 1;
+         //   _req.access_latency == 1;
+         //   _req.hold_duration  == 1;
+         //   _req.tail_length    == 1;
+         //})
+         `uvm_create(_req)
+         _req.access_type    = UVMA_OBI_ACCESS_WRITE;
+         _req.err            = error;
+         _req.gnt_latency    = 1;
+         _req.access_latency = 1;
+         _req.hold_duration  = 1;
+         _req.tail_length    = 1;
+         `uvm_send(_req)
       end
       
       default: `uvm_fatal("OBI_SLV_SEQ", $sformatf("Invalid access_type (%0d):\n%s", mon_req.access_type, mon_req.sprint()))
