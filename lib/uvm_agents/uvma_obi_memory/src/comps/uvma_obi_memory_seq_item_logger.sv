@@ -17,26 +17,26 @@
 // 
 
 
-`ifndef __UVMA_OBI_SEQ_ITEM_LOGGER_SV__
-`define __UVMA_OBI_SEQ_ITEM_LOGGER_SV__
+`ifndef __UVMA_OBI_MEMORY_SEQ_ITEM_LOGGER_SV__
+`define __UVMA_OBI_MEMORY_SEQ_ITEM_LOGGER_SV__
 
 
 /**
  * Component writing Open Bus Interface sequence items debug data to disk as plain text.
  */
-class uvma_obi_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
-   .T_TRN  (uvma_obi_base_seq_item_c),
-   .T_CFG  (uvma_obi_cfg_c          ),
-   .T_CNTXT(uvma_obi_cntxt_c        )
+class uvma_obi_memory_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
+   .T_TRN  (uvma_obi_memory_base_seq_item_c),
+   .T_CFG  (uvma_obi_memory_cfg_c          ),
+   .T_CNTXT(uvma_obi_memory_cntxt_c        )
 );
    
-   `uvm_component_utils(uvma_obi_seq_item_logger_c)
+   `uvm_component_utils(uvma_obi_memory_seq_item_logger_c)
    
    
    /**
     * Default constructor.
     */
-   function new(string name="uvma_obi_seq_item_logger", uvm_component parent=null);
+   function new(string name="uvma_obi_memory_seq_item_logger", uvm_component parent=null);
       
       super.new(name, parent);
       
@@ -45,20 +45,20 @@ class uvma_obi_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
    /**
     * Writes contents of t to disk.
     */
-   virtual function void write(uvma_obi_base_seq_item_c t);
+   virtual function void write(uvma_obi_memory_base_seq_item_c t);
       
-      uvma_obi_mstr_seq_item_c  mstr_t;
-      uvma_obi_slv_seq_item_c   slv_t;
+      uvma_obi_memory_mstr_seq_item_c  mstr_t;
+      uvma_obi_memory_slv_seq_item_c   slv_t;
       
       case (cfg.drv_mode)
-         UVMA_OBI_MODE_MSTR: begin
+         UVMA_OBI_MEMORY_MODE_MSTR: begin
             if (!$cast(mstr_t, t)) begin
                `uvm_fatal("OBI_SEQ_ITEM_LOGGER", $sformatf("Could not cast 't' (%s) to 'mstr_t' (%s)", $typename(t), $typename(mstr_t)))
             end
             write_mstr(mstr_t);
          end
          
-         UVMA_OBI_MODE_SLV: begin
+         UVMA_OBI_MEMORY_MODE_SLV: begin
             if (!$cast(slv_t, t)) begin
                `uvm_fatal("OBI_SEQ_ITEM_LOGGER", $sformatf("Could not cast 't' (%s) to 'slv_t' (%s)", $typename(t), $typename(slv_t)))
             end
@@ -73,7 +73,7 @@ class uvma_obi_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
    /**
     * Writes contents of mstr t to disk.
     */
-   virtual function void write_mstr(uvma_obi_mstr_seq_item_c t);
+   virtual function void write_mstr(uvma_obi_memory_mstr_seq_item_c t);
       
       string access_str = "";
       string err_str    = "";
@@ -85,8 +85,8 @@ class uvma_obi_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
       string id_str     = "";
       
       case (t.access_type)
-         UVMA_OBI_ACCESS_READ : access_str = "R  ";
-         UVMA_OBI_ACCESS_WRITE: access_str = "  W";
+         UVMA_OBI_MEMORY_ACCESS_READ : access_str = "R  ";
+         UVMA_OBI_MEMORY_ACCESS_WRITE: access_str = "  W";
          default              : access_str = " ? ";
       endcase
       
@@ -96,13 +96,13 @@ class uvma_obi_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
       endcase
       
       case (t.access_type)
-         UVMA_OBI_ACCESS_READ : data_str = $sformatf("%b", t.rdata);
-         UVMA_OBI_ACCESS_WRITE: data_str = $sformatf("%h", t.wdata);
+         UVMA_OBI_MEMORY_ACCESS_READ : data_str = $sformatf("%b", t.rdata);
+         UVMA_OBI_MEMORY_ACCESS_WRITE: data_str = $sformatf("%h", t.wdata);
       endcase
       
       case (t.access_type)
-         UVMA_OBI_ACCESS_READ : ruser_str = $sformatf("%h", t.rdata);
-         UVMA_OBI_ACCESS_WRITE: wuser_str = $sformatf("%h", t.wdata);
+         UVMA_OBI_MEMORY_ACCESS_READ : ruser_str = $sformatf("%h", t.rdata);
+         UVMA_OBI_MEMORY_ACCESS_WRITE: wuser_str = $sformatf("%h", t.wdata);
       endcase
       
       auser_str = $sformatf("%h", t.auser);
@@ -116,7 +116,7 @@ class uvma_obi_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
    /**
     * Writes contents of slv t to disk.
     */
-   virtual function void write_slv(uvma_obi_slv_seq_item_c t);
+   virtual function void write_slv(uvma_obi_memory_slv_seq_item_c t);
       
       string access_str = "";
       string err_str    = "";
@@ -128,8 +128,8 @@ class uvma_obi_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
       string id_str     = "";
       
       case (t.access_type)
-         UVMA_OBI_ACCESS_READ : access_str = "R  ";
-         UVMA_OBI_ACCESS_WRITE: access_str = "  W";
+         UVMA_OBI_MEMORY_ACCESS_READ : access_str = "R  ";
+         UVMA_OBI_MEMORY_ACCESS_WRITE: access_str = "  W";
          default              : access_str = " ? ";
       endcase
       
@@ -139,13 +139,13 @@ class uvma_obi_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
       endcase
       
       case (t.access_type)
-         UVMA_OBI_ACCESS_READ : data_str = $sformatf("%h", t.rdata);
-         UVMA_OBI_ACCESS_WRITE: data_str = $sformatf("%h", t.orig_trn.data);
+         UVMA_OBI_MEMORY_ACCESS_READ : data_str = $sformatf("%h", t.rdata);
+         UVMA_OBI_MEMORY_ACCESS_WRITE: data_str = $sformatf("%h", t.orig_trn.data);
       endcase
       
       case (t.access_type)
-         UVMA_OBI_ACCESS_READ : ruser_str = $sformatf("%h", t.rdata);
-         UVMA_OBI_ACCESS_WRITE: wuser_str = $sformatf("%h", t.orig_trn.data);
+         UVMA_OBI_MEMORY_ACCESS_READ : ruser_str = $sformatf("%h", t.rdata);
+         UVMA_OBI_MEMORY_ACCESS_WRITE: wuser_str = $sformatf("%h", t.orig_trn.data);
       endcase
       
       auser_str = $sformatf("%h", t.orig_trn.auser);
@@ -167,21 +167,21 @@ class uvma_obi_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
       
    endfunction : print_header
    
-endclass : uvma_obi_seq_item_logger_c
+endclass : uvma_obi_memory_seq_item_logger_c
 
 
 /**
  * Component writing Open Bus Interface monitor transactions debug data to disk as JavaScript Object Notation (JSON).
  */
-class uvma_obi_seq_item_logger_json_c extends uvma_obi_seq_item_logger_c;
+class uvma_obi_memory_seq_item_logger_json_c extends uvma_obi_memory_seq_item_logger_c;
    
-   `uvm_component_utils(uvma_obi_seq_item_logger_json_c)
+   `uvm_component_utils(uvma_obi_memory_seq_item_logger_json_c)
    
    
    /**
     * Set file extension to '.json'.
     */
-   function new(string name="uvma_obi_seq_item_logger_json", uvm_component parent=null);
+   function new(string name="uvma_obi_memory_seq_item_logger_json", uvm_component parent=null);
       
       super.new(name, parent);
       fextension = "json";
@@ -191,9 +191,9 @@ class uvma_obi_seq_item_logger_json_c extends uvma_obi_seq_item_logger_c;
    /**
     * Writes contents of t to disk.
     */
-   virtual function void write(uvma_obi_base_seq_item_c t);
+   virtual function void write(uvma_obi_memory_base_seq_item_c t);
       
-      // TODO Implement uvma_obi_seq_item_logger_json_c::write()
+      // TODO Implement uvma_obi_memory_seq_item_logger_json_c::write()
       // Ex: fwrite({"{",
       //       $sformatf("\"time\":\"%0t\",", $realtime()),
       //       $sformatf("\"a\":%h,"        , t.a        ),
@@ -213,7 +213,7 @@ class uvma_obi_seq_item_logger_json_c extends uvma_obi_seq_item_logger_c;
       
    endfunction : print_header
    
-endclass : uvma_obi_seq_item_logger_json_c
+endclass : uvma_obi_memory_seq_item_logger_json_c
 
 
-`endif // __UVMA_OBI_SEQ_ITEM_LOGGER_SV__
+`endif // __UVMA_OBI_MEMORY_SEQ_ITEM_LOGGER_SV__

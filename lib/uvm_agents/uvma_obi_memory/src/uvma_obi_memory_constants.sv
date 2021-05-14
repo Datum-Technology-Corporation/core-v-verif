@@ -17,18 +17,18 @@
 // 
 
 
-`ifndef __UVMA_OBI_CONSTANTS_SV__
-`define __UVMA_OBI_CONSTANTS_SV__
+`ifndef __UVMA_OBI_MEMORY_CONSTANTS_SV__
+`define __UVMA_OBI_MEMORY_CONSTANTS_SV__
 
 
-const int unsigned  uvma_obi_default_auser_width = `UVMA_OBI_AUSER_DEFAULT_WIDTH; // Measured in bits (b)
-const int unsigned  uvma_obi_default_wuser_width = `UVMA_OBI_WUSER_DEFAULT_WIDTH; // Measured in bits (b)
-const int unsigned  uvma_obi_default_ruser_width = `UVMA_OBI_RUSER_DEFAULT_WIDTH; // Measured in bits (b)
-const int unsigned  uvma_obi_default_addr_width  = `UVMA_OBI_ADDR_DEFAULT_WIDTH ; // Measured in bits (b)
-const int unsigned  uvma_obi_default_data_width  = `UVMA_OBI_DATA_DEFAULT_WIDTH ; // Measured in bits (b)
-const int unsigned  uvma_obi_default_id_width    = `UVMA_OBI_ID_DEFAULT_WIDTH   ; // Measured in bits (b)
-const int unsigned  uvma_obi_default_achk_width  = `UVMA_OBI_ACHK_DEFAULT_WIDTH ; // Measured in bits (b)
-const int unsigned  uvma_obi_default_rchk_width  = `UVMA_OBI_RCHK_DEFAULT_WIDTH ; // Measured in bits (b)
+const int unsigned  uvma_obi_memory_default_auser_width = `UVMA_OBI_MEMORY_AUSER_DEFAULT_WIDTH; // Measured in bits (b)
+const int unsigned  uvma_obi_memory_default_wuser_width = `UVMA_OBI_MEMORY_WUSER_DEFAULT_WIDTH; // Measured in bits (b)
+const int unsigned  uvma_obi_memory_default_ruser_width = `UVMA_OBI_MEMORY_RUSER_DEFAULT_WIDTH; // Measured in bits (b)
+const int unsigned  uvma_obi_memory_default_addr_width  = `UVMA_OBI_MEMORY_ADDR_DEFAULT_WIDTH ; // Measured in bits (b)
+const int unsigned  uvma_obi_memory_default_data_width  = `UVMA_OBI_MEMORY_DATA_DEFAULT_WIDTH ; // Measured in bits (b)
+const int unsigned  uvma_obi_memory_default_id_width    = `UVMA_OBI_MEMORY_ID_DEFAULT_WIDTH   ; // Measured in bits (b)
+const int unsigned  uvma_obi_memory_default_achk_width  = `UVMA_OBI_MEMORY_ACHK_DEFAULT_WIDTH ; // Measured in bits (b)
+const int unsigned  uvma_obi_memory_default_rchk_width  = `UVMA_OBI_MEMORY_RCHK_DEFAULT_WIDTH ; // Measured in bits (b)
 
 
-`endif // __UVMA_OBI_CONSTANTS_SV__
+`endif // __UVMA_OBI_MEMORY_CONSTANTS_SV__

@@ -17,22 +17,22 @@
 // 
 
 
-`ifndef __UVMA_OBI_CNTXT_SV__
-`define __UVMA_OBI_CNTXT_SV__
+`ifndef __UVMA_OBI_MEMORY_CNTXT_SV__
+`define __UVMA_OBI_MEMORY_CNTXT_SV__
 
 
 /**
  * Object encapsulating all state variables for all Open Bus Interface agent
- * (uvma_obi_agent_c) components.
+ * (uvma_obi_memory_agent_c) components.
  */
-class uvma_obi_cntxt_c extends uvm_object;
+class uvma_obi_memory_cntxt_c extends uvm_object;
    
    // Handle to agent interface
-   virtual uvma_obi_if  vif;
+   virtual uvma_obi_memory_if  vif;
    
    // Integrals
-   uvma_obi_reset_state_enum  reset_state        = UVMA_OBI_RESET_STATE_PRE_RESET;
-   uvma_obi_phases_enum       mon_phase          = UVMA_OBI_PHASE_INACTIVE;
+   uvma_obi_memory_reset_state_enum  reset_state        = UVMA_OBI_MEMORY_RESET_STATE_PRE_RESET;
+   uvma_obi_memory_phases_enum       mon_phase          = UVMA_OBI_MEMORY_PHASE_INACTIVE;
    int unsigned               mon_gnt_latency    = 0;
    int unsigned               mon_rvalid_latency = 0;
    int unsigned               mon_rready_latency = 0;
@@ -43,9 +43,9 @@ class uvma_obi_cntxt_c extends uvm_object;
    uvm_event  sample_cntxt_e;
    
    
-   `uvm_object_utils_begin(uvma_obi_cntxt_c)
-      `uvm_field_enum(uvma_obi_reset_state_enum, reset_state, UVM_DEFAULT)
-      `uvm_field_enum(uvma_obi_phases_enum     , mon_phase  , UVM_DEFAULT)
+   `uvm_object_utils_begin(uvma_obi_memory_cntxt_c)
+      `uvm_field_enum(uvma_obi_memory_reset_state_enum, reset_state, UVM_DEFAULT)
+      `uvm_field_enum(uvma_obi_memory_phases_enum     , mon_phase  , UVM_DEFAULT)
       
       `uvm_field_event(sample_cfg_e  , UVM_DEFAULT)
       `uvm_field_event(sample_cntxt_e, UVM_DEFAULT)
@@ -55,17 +55,17 @@ class uvma_obi_cntxt_c extends uvm_object;
    /**
     * Builds events.
     */
-   extern function new(string name="uvma_obi_cntxt");
+   extern function new(string name="uvma_obi_memory_cntxt");
    
    /**
-    * TODO Describe uvma_obi_cntxt_c::reset()
+    * TODO Describe uvma_obi_memory_cntxt_c::reset()
     */
    extern function void reset();
    
-endclass : uvma_obi_cntxt_c
+endclass : uvma_obi_memory_cntxt_c
 
 
-function uvma_obi_cntxt_c::new(string name="uvma_obi_cntxt");
+function uvma_obi_memory_cntxt_c::new(string name="uvma_obi_memory_cntxt");
    
    super.new(name);
    
@@ -75,9 +75,9 @@ function uvma_obi_cntxt_c::new(string name="uvma_obi_cntxt");
 endfunction : new
 
 
-function void uvma_obi_cntxt_c::reset();
+function void uvma_obi_memory_cntxt_c::reset();
    
-   mon_phase          = UVMA_OBI_PHASE_INACTIVE;
+   mon_phase          = UVMA_OBI_MEMORY_PHASE_INACTIVE;
    mon_gnt_latency    = 0;
    mon_rvalid_latency = 0;
    mon_rready_latency = 0;
@@ -86,4 +86,4 @@ function void uvma_obi_cntxt_c::reset();
 endfunction : reset
 
 
-`endif // __UVMA_OBI_CNTXT_SV__
+`endif // __UVMA_OBI_MEMORY_CNTXT_SV__

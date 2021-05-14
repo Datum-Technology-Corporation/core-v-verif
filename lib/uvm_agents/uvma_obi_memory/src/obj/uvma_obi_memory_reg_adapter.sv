@@ -17,8 +17,8 @@
 // 
 
 
-`ifndef __UVMA_OBI_REG_ADAPTER_SV__
-`define __UVMA_OBI_REG_ADAPTER_SV__
+`ifndef __UVMA_OBI_MEMORY_REG_ADAPTER_SV__
+`define __UVMA_OBI_MEMORY_REG_ADAPTER_SV__
 
 
 /**
@@ -27,15 +27,15 @@
  * 
  * Must be overriden by user if there are more than one slave to be selected.
  */
-class uvma_obi_reg_adapter_c extends uvml_ral_reg_adapter_c;
+class uvma_obi_memory_reg_adapter_c extends uvml_ral_reg_adapter_c;
    
-   `uvm_object_utils(uvma_obi_reg_adapter_c)
+   `uvm_object_utils(uvma_obi_memory_reg_adapter_c)
    
    
    /**
     * Default constructor
     */
-   extern function new(string name="uvma_obi_reg_adapter");
+   extern function new(string name="uvma_obi_memory_reg_adapter");
    
    /**
     * Converts from UVM register operation to Open Bus Interface.
@@ -47,23 +47,23 @@ class uvma_obi_reg_adapter_c extends uvml_ral_reg_adapter_c;
     */
    extern virtual function void bus2reg(uvm_sequence_item bus_item, ref uvm_reg_bus_op rw);
    
-endclass : uvma_obi_reg_adapter_c
+endclass : uvma_obi_memory_reg_adapter_c
 
 
-function uvma_obi_reg_adapter_c::new(string name="uvma_obi_reg_adapter");
+function uvma_obi_memory_reg_adapter_c::new(string name="uvma_obi_memory_reg_adapter");
    
    super.new(name);
    
 endfunction : new
 
 
-function uvm_sequence_item uvma_obi_reg_adapter_c::reg2bus(const ref uvm_reg_bus_op rw);
+function uvm_sequence_item uvma_obi_memory_reg_adapter_c::reg2bus(const ref uvm_reg_bus_op rw);
    
-   uvma_obi_mstr_seq_item_c  obi_trn = uvma_obi_mstr_seq_item_c::type_id::create("obi_trn");
+   uvma_obi_memory_mstr_seq_item_c  obi_trn = uvma_obi_memory_mstr_seq_item_c::type_id::create("obi_trn");
    
-   obi_trn.access_type = (rw.kind == UVM_READ) ? UVMA_OBI_ACCESS_READ : UVMA_OBI_ACCESS_WRITE;
+   obi_trn.access_type = (rw.kind == UVM_READ) ? UVMA_OBI_MEMORY_ACCESS_READ : UVMA_OBI_MEMORY_ACCESS_WRITE;
    obi_trn.address     = rw.addr;
-   obi_trn.be          = {(`UVMA_OBI_DATA_MAX_WIDTH/8){1'b1}};
+   obi_trn.be          = {(`UVMA_OBI_MEMORY_DATA_MAX_WIDTH/8){1'b1}};
    
    if (rw.kind == UVM_WRITE) begin
       obi_trn.wdata = rw.data;
@@ -74,20 +74,20 @@ function uvm_sequence_item uvma_obi_reg_adapter_c::reg2bus(const ref uvm_reg_bus
 endfunction : reg2bus
 
 
-function void uvma_obi_reg_adapter_c::bus2reg(uvm_sequence_item bus_item, ref uvm_reg_bus_op rw);
+function void uvma_obi_memory_reg_adapter_c::bus2reg(uvm_sequence_item bus_item, ref uvm_reg_bus_op rw);
    
-   uvma_obi_mstr_seq_item_c  obi_trn;
+   uvma_obi_memory_mstr_seq_item_c  obi_trn;
    
    if (!$cast(obi_trn, bus_item)) begin
       `uvm_fatal("OBI", $sformatf("Could not cast bus_item (%s) into obi_trn (%s)", $typename(bus_item), $typename(obi_trn)))
    end
    
-   rw.kind = (obi_trn.access_type == UVMA_OBI_ACCESS_READ) ? UVM_READ : UVM_WRITE;
+   rw.kind = (obi_trn.access_type == UVMA_OBI_MEMORY_ACCESS_READ) ? UVM_READ : UVM_WRITE;
    rw.addr = obi_trn.address;
    
    case (obi_trn.access_type)
-      UVMA_OBI_ACCESS_READ : rw.data = obi_trn.rdata;
-      UVMA_OBI_ACCESS_WRITE: rw.data = obi_trn.wdata;
+      UVMA_OBI_MEMORY_ACCESS_READ : rw.data = obi_trn.rdata;
+      UVMA_OBI_MEMORY_ACCESS_WRITE: rw.data = obi_trn.wdata;
       
       default: `uvm_fatal("OBI_MON", $sformatf("Invalid access_type: %0d", obi_trn.access_type))
    endcase
@@ -102,4 +102,4 @@ function void uvma_obi_reg_adapter_c::bus2reg(uvm_sequence_item bus_item, ref uv
 endfunction : bus2reg
 
 
-`endif // __UVMA_OBI_REG_ADAPTER_SV__
+`endif // __UVMA_OBI_MEMORY_REG_ADAPTER_SV__

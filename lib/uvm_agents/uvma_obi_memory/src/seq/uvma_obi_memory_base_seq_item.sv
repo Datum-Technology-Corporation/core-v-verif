@@ -17,20 +17,20 @@
 // 
 
 
-`ifndef __UVMA_OBI_BASE_SEQ_ITEM_SV__
-`define __UVMA_OBI_BASE_SEQ_ITEM_SV__
+`ifndef __UVMA_OBI_MEMORY_BASE_SEQ_ITEM_SV__
+`define __UVMA_OBI_MEMORY_BASE_SEQ_ITEM_SV__
 
 
 /**
- * Object created by Open Bus Interface agent sequences extending uvma_obi_seq_base_c.
+ * Object created by Open Bus Interface agent sequences extending uvma_obi_memory_seq_base_c.
  */
-class uvma_obi_base_seq_item_c extends uvml_trn_seq_item_c;
+class uvma_obi_memory_base_seq_item_c extends uvml_trn_seq_item_c;
    
    // Data
-   rand uvma_obi_access_type_enum  access_type; ///< Read or write
+   rand uvma_obi_memory_access_type_enum  access_type; ///< Read or write
    
    // Metadata
-   uvma_obi_mode_enum  mode;
+   uvma_obi_memory_mode_enum  mode;
    int unsigned        auser_width;
    int unsigned        wuser_width;
    int unsigned        ruser_width;
@@ -39,25 +39,25 @@ class uvma_obi_base_seq_item_c extends uvml_trn_seq_item_c;
    int unsigned        id_width   ;
    
    
-   `uvm_object_utils_begin(uvma_obi_base_seq_item_c)
-      `uvm_field_enum(uvma_obi_mode_enum       , mode       , UVM_DEFAULT)
-      `uvm_field_enum(uvma_obi_access_type_enum, access_type, UVM_DEFAULT)
+   `uvm_object_utils_begin(uvma_obi_memory_base_seq_item_c)
+      `uvm_field_enum(uvma_obi_memory_mode_enum       , mode       , UVM_DEFAULT)
+      `uvm_field_enum(uvma_obi_memory_access_type_enum, access_type, UVM_DEFAULT)
    `uvm_object_utils_end
    
    
    /**
     * Default constructor.
     */
-   extern function new(string name="uvma_obi_base_seq_item");
+   extern function new(string name="uvma_obi_memory_base_seq_item");
    
-endclass : uvma_obi_base_seq_item_c
+endclass : uvma_obi_memory_base_seq_item_c
 
 
-function uvma_obi_base_seq_item_c::new(string name="uvma_obi_base_seq_item");
+function uvma_obi_memory_base_seq_item_c::new(string name="uvma_obi_memory_base_seq_item");
    
    super.new(name);
    
 endfunction : new
 
 
-`endif // __UVMA_OBI_BASE_SEQ_ITEM_SV__
+`endif // __UVMA_OBI_MEMORY_BASE_SEQ_ITEM_SV__

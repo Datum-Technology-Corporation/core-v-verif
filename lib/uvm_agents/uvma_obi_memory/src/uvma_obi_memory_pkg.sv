@@ -17,19 +17,19 @@
 // 
 
 
-`ifndef __UVMA_OBI_PKG_SV__
-`define __UVMA_OBI_PKG_SV__
+`ifndef __UVMA_OBI_MEMORY_PKG_SV__
+`define __UVMA_OBI_MEMORY_PKG_SV__
 
 
 // Pre-processor macros
 `include "uvm_macros.svh"
 `include "uvml_hrtbt_macros.sv"
-`include "uvma_obi_macros.sv"
+`include "uvma_obi_memory_macros.sv"
 
 // Interfaces / Modules / Checkers
-`include "uvma_obi_if.sv"
-`ifdef UVMA_OBI_INC_IF_CHKR
-`include "uvma_obi_if_chkr.sv"
+`include "uvma_obi_memory_if.sv"
+`ifdef UVMA_OBI_MEMORY_INC_IF_CHKR
+`include "uvma_obi_memory_if_chkr.sv"
 `endif
 
 
@@ -46,35 +46,35 @@ package uvma_obi_memory_pkg;
    import uvml_ral_pkg  ::*;
    
    // Constants / Structs / Enums
-   `include "uvma_obi_constants.sv"
-   `include "uvma_obi_tdefs.sv"
+   `include "uvma_obi_memory_constants.sv"
+   `include "uvma_obi_memory_tdefs.sv"
    
    // Objects
-   `include "uvma_obi_cfg.sv"
-   `include "uvma_obi_cntxt.sv"
+   `include "uvma_obi_memory_cfg.sv"
+   `include "uvma_obi_memory_cntxt.sv"
    
    // High-level transactions
-   `include "uvma_obi_mon_trn.sv"
-   `include "uvma_obi_base_seq_item.sv"
-   `include "uvma_obi_mstr_seq_item.sv"
-   `include "uvma_obi_slv_seq_item.sv"
+   `include "uvma_obi_memory_mon_trn.sv"
+   `include "uvma_obi_memory_base_seq_item.sv"
+   `include "uvma_obi_memory_mstr_seq_item.sv"
+   `include "uvma_obi_memory_slv_seq_item.sv"
    
    // Agent components
-   `include "uvma_obi_cov_model.sv"
-   `include "uvma_obi_drv.sv"
-   `include "uvma_obi_mon.sv"
-   `include "uvma_obi_sqr.sv"
-   `include "uvma_obi_mon_trn_logger.sv"
-   `include "uvma_obi_seq_item_logger.sv"
-   `include "uvma_obi_agent.sv"
+   `include "uvma_obi_memory_cov_model.sv"
+   `include "uvma_obi_memory_drv.sv"
+   `include "uvma_obi_memory_mon.sv"
+   `include "uvma_obi_memory_sqr.sv"
+   `include "uvma_obi_memory_mon_trn_logger.sv"
+   `include "uvma_obi_memory_seq_item_logger.sv"
+   `include "uvma_obi_memory_agent.sv"
    
    // Sequences
-   `include "uvma_obi_seq_lib.sv"
+   `include "uvma_obi_memory_seq_lib.sv"
    
    // Misc.
-   `include "uvma_obi_reg_adapter.sv"
+   `include "uvma_obi_memory_reg_adapter.sv"
    
 endpackage : uvma_obi_memory_pkg
 
 
-`endif // __UVMA_OBI_PKG_SV__
+`endif // __UVMA_OBI_MEMORY_PKG_SV__

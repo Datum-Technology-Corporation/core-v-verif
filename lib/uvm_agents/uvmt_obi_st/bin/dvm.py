@@ -70,8 +70,8 @@ sim_waves       = False
 
 vivado_path     = os.environ.get('VIVADO_PATH')
 if (vivado_path == None):
-    vivado_path = "/tools/Xilinx/Vivado/2020.2/bin/"   
-    #vivado_path = "C:/Xilinx/Vivado/2020.3/bin/"
+    #vivado_path = "/tools/Xilinx/Vivado/2020.2/bin/"   
+    vivado_path = "F:/Xilinx/Vivado/2020.3/bin/"
     if (dbg):
         print ("VIVADO_PATH env var *not* set, using " + vivado_path)
 else:

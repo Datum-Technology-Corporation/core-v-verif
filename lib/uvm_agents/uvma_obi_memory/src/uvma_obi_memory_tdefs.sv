@@ -17,67 +17,67 @@
 // 
 
 
-`ifndef __UVMA_OBI_TDEFS_SV__
-`define __UVMA_OBI_TDEFS_SV__
+`ifndef __UVMA_OBI_MEMORY_TDEFS_SV__
+`define __UVMA_OBI_MEMORY_TDEFS_SV__
 
 
 // Logic vectors
-typedef logic [(`UVMA_OBI_AUSER_MAX_WIDTH   -1):0]  uvma_obi_auser_l_t  ;
-typedef logic [(`UVMA_OBI_WUSER_MAX_WIDTH   -1):0]  uvma_obi_wuser_l_t  ;
-typedef logic [(`UVMA_OBI_RUSER_MAX_WIDTH   -1):0]  uvma_obi_ruser_l_t  ;
-typedef logic [(`UVMA_OBI_ADDR_MAX_WIDTH    -1):0]  uvma_obi_addr_l_t   ;
-typedef logic [(`UVMA_OBI_DATA_MAX_WIDTH    -1):0]  uvma_obi_data_l_t   ;
-typedef logic [((`UVMA_OBI_DATA_MAX_WIDTH/8)-1):0]  uvma_obi_be_l_t     ;
-typedef logic [(`UVMA_OBI_ID_MAX_WIDTH      -1):0]  uvma_obi_id_l_t     ;
-typedef logic [5:0]                                 uvma_obi_atop_l_t   ;
-typedef logic [1:0]                                 uvma_obi_memtype_l_t;
-typedef logic [(`UVMA_OBI_ACHK_MAX_WIDTH    -1):0]  uvma_obi_achk_l_t   ;
-typedef logic [(`UVMA_OBI_RCHK_MAX_WIDTH    -1):0]  uvma_obi_rchk_l_t   ;
+typedef logic [(`UVMA_OBI_MEMORY_AUSER_MAX_WIDTH   -1):0]  uvma_obi_memory_auser_l_t  ;
+typedef logic [(`UVMA_OBI_MEMORY_WUSER_MAX_WIDTH   -1):0]  uvma_obi_memory_wuser_l_t  ;
+typedef logic [(`UVMA_OBI_MEMORY_RUSER_MAX_WIDTH   -1):0]  uvma_obi_memory_ruser_l_t  ;
+typedef logic [(`UVMA_OBI_MEMORY_ADDR_MAX_WIDTH    -1):0]  uvma_obi_memory_addr_l_t   ;
+typedef logic [(`UVMA_OBI_MEMORY_DATA_MAX_WIDTH    -1):0]  uvma_obi_memory_data_l_t   ;
+typedef logic [((`UVMA_OBI_MEMORY_DATA_MAX_WIDTH/8)-1):0]  uvma_obi_memory_be_l_t     ;
+typedef logic [(`UVMA_OBI_MEMORY_ID_MAX_WIDTH      -1):0]  uvma_obi_memory_id_l_t     ;
+typedef logic [5:0]                                 uvma_obi_memory_atop_l_t   ;
+typedef logic [1:0]                                 uvma_obi_memory_memtype_l_t;
+typedef logic [(`UVMA_OBI_MEMORY_ACHK_MAX_WIDTH    -1):0]  uvma_obi_memory_achk_l_t   ;
+typedef logic [(`UVMA_OBI_MEMORY_RCHK_MAX_WIDTH    -1):0]  uvma_obi_memory_rchk_l_t   ;
 
 // Bit vectors
-typedef bit [(`UVMA_OBI_AUSER_MAX_WIDTH   -1):0]  uvma_obi_auser_b_t  ;
-typedef bit [(`UVMA_OBI_WUSER_MAX_WIDTH   -1):0]  uvma_obi_wuser_b_t  ;
-typedef bit [(`UVMA_OBI_RUSER_MAX_WIDTH   -1):0]  uvma_obi_ruser_b_t  ;
-typedef bit [(`UVMA_OBI_ADDR_MAX_WIDTH    -1):0]  uvma_obi_addr_b_t   ;
-typedef bit [(`UVMA_OBI_DATA_MAX_WIDTH    -1):0]  uvma_obi_data_b_t   ;
-typedef bit [((`UVMA_OBI_DATA_MAX_WIDTH/8)-1):0]  uvma_obi_be_b_t     ;
-typedef bit [(`UVMA_OBI_ID_MAX_WIDTH      -1):0]  uvma_obi_id_b_t     ;
-typedef bit [5:0]                                 uvma_obi_atop_b_t   ;
-typedef bit [1:0]                                 uvma_obi_memtype_b_t;
-typedef bit [(`UVMA_OBI_ACHK_MAX_WIDTH    -1):0]  uvma_obi_achk_b_t   ;
-typedef bit [(`UVMA_OBI_RCHK_MAX_WIDTH    -1):0]  uvma_obi_rchk_b_t   ;
+typedef bit [(`UVMA_OBI_MEMORY_AUSER_MAX_WIDTH   -1):0]  uvma_obi_memory_auser_b_t  ;
+typedef bit [(`UVMA_OBI_MEMORY_WUSER_MAX_WIDTH   -1):0]  uvma_obi_memory_wuser_b_t  ;
+typedef bit [(`UVMA_OBI_MEMORY_RUSER_MAX_WIDTH   -1):0]  uvma_obi_memory_ruser_b_t  ;
+typedef bit [(`UVMA_OBI_MEMORY_ADDR_MAX_WIDTH    -1):0]  uvma_obi_memory_addr_b_t   ;
+typedef bit [(`UVMA_OBI_MEMORY_DATA_MAX_WIDTH    -1):0]  uvma_obi_memory_data_b_t   ;
+typedef bit [((`UVMA_OBI_MEMORY_DATA_MAX_WIDTH/8)-1):0]  uvma_obi_memory_be_b_t     ;
+typedef bit [(`UVMA_OBI_MEMORY_ID_MAX_WIDTH      -1):0]  uvma_obi_memory_id_b_t     ;
+typedef bit [5:0]                                 uvma_obi_memory_atop_b_t   ;
+typedef bit [1:0]                                 uvma_obi_memory_memtype_b_t;
+typedef bit [(`UVMA_OBI_MEMORY_ACHK_MAX_WIDTH    -1):0]  uvma_obi_memory_achk_b_t   ;
+typedef bit [(`UVMA_OBI_MEMORY_RCHK_MAX_WIDTH    -1):0]  uvma_obi_memory_rchk_b_t   ;
 
 
 typedef enum {
-   UVMA_OBI_MODE_MSTR,
-   UVMA_OBI_MODE_SLV
-} uvma_obi_mode_enum;
+   UVMA_OBI_MEMORY_MODE_MSTR,
+   UVMA_OBI_MEMORY_MODE_SLV
+} uvma_obi_memory_mode_enum;
 
 typedef enum {
-   UVMA_OBI_RESET_STATE_PRE_RESET ,
-   UVMA_OBI_RESET_STATE_IN_RESET  ,
-   UVMA_OBI_RESET_STATE_POST_RESET
-} uvma_obi_reset_state_enum;
+   UVMA_OBI_MEMORY_RESET_STATE_PRE_RESET ,
+   UVMA_OBI_MEMORY_RESET_STATE_IN_RESET  ,
+   UVMA_OBI_MEMORY_RESET_STATE_POST_RESET
+} uvma_obi_memory_reset_state_enum;
 
 typedef enum {
-   UVMA_OBI_DRV_IDLE_SAME  ,
-   UVMA_OBI_DRV_IDLE_ZEROS ,
-   UVMA_OBI_DRV_IDLE_RANDOM,
-   UVMA_OBI_DRV_IDLE_X     ,
-   UVMA_OBI_DRV_IDLE_Z
-} uvma_obi_drv_idle_enum;
+   UVMA_OBI_MEMORY_DRV_IDLE_SAME  ,
+   UVMA_OBI_MEMORY_DRV_IDLE_ZEROS ,
+   UVMA_OBI_MEMORY_DRV_IDLE_RANDOM,
+   UVMA_OBI_MEMORY_DRV_IDLE_X     ,
+   UVMA_OBI_MEMORY_DRV_IDLE_Z
+} uvma_obi_memory_drv_idle_enum;
 
 typedef enum {
-   UVMA_OBI_PHASE_INACTIVE,
-   UVMA_OBI_PHASE_SETUP   ,
-   UVMA_OBI_PHASE_ACCESS
-} uvma_obi_phases_enum;
+   UVMA_OBI_MEMORY_PHASE_INACTIVE,
+   UVMA_OBI_MEMORY_PHASE_SETUP   ,
+   UVMA_OBI_MEMORY_PHASE_ACCESS
+} uvma_obi_memory_phases_enum;
 
 
 typedef enum {
-   UVMA_OBI_ACCESS_READ ,
-   UVMA_OBI_ACCESS_WRITE
-} uvma_obi_access_type_enum;
+   UVMA_OBI_MEMORY_ACCESS_READ ,
+   UVMA_OBI_MEMORY_ACCESS_WRITE
+} uvma_obi_memory_access_type_enum;
 
 
-`endif // __UVMA_OBI_TDEFS_SV__
+`endif // __UVMA_OBI_MEMORY_TDEFS_SV__

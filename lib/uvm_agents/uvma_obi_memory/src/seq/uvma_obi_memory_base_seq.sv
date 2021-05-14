@@ -16,50 +16,50 @@
 // 
 
 
-`ifndef __UVMA_OBI_BASE_SEQ_SV__
-`define __UVMA_OBI_BASE_SEQ_SV__
+`ifndef __UVMA_OBI_MEMORY_BASE_SEQ_SV__
+`define __UVMA_OBI_MEMORY_BASE_SEQ_SV__
 
 
 /**
  * Abstract object from which all other Open Bus Interface agent
  * sequences must extend. Subclasses must be run on Open Bus Interface
- * sequencer (uvma_obi_sqr_c) instance.
+ * sequencer (uvma_obi_memory_sqr_c) instance.
  */
-class uvma_obi_base_seq_c extends uvm_sequence#(
-   .REQ(uvma_obi_base_seq_item_c),
-   .RSP(uvma_obi_mon_trn_c      )
+class uvma_obi_memory_base_seq_c extends uvm_sequence#(
+   .REQ(uvma_obi_memory_base_seq_item_c),
+   .RSP(uvma_obi_memory_mon_trn_c      )
 );
    
    // Agent handles
-   uvma_obi_cfg_c    cfg;
-   uvma_obi_cntxt_c  cntxt;
+   uvma_obi_memory_cfg_c    cfg;
+   uvma_obi_memory_cntxt_c  cntxt;
    
    
-   `uvm_object_utils(uvma_obi_base_seq_c)
-   `uvm_declare_p_sequencer(uvma_obi_sqr_c)
+   `uvm_object_utils(uvma_obi_memory_base_seq_c)
+   `uvm_declare_p_sequencer(uvma_obi_memory_sqr_c)
    
    
    /**
     * Default constructor.
     */
-   extern function new(string name="uvma_obi_base_seq");
+   extern function new(string name="uvma_obi_memory_base_seq");
    
    /**
     * Assigns cfg and cntxt handles from p_sequencer.
     */
    extern virtual task pre_start();
    
-endclass : uvma_obi_base_seq_c
+endclass : uvma_obi_memory_base_seq_c
 
 
-function uvma_obi_base_seq_c::new(string name="uvma_obi_base_seq");
+function uvma_obi_memory_base_seq_c::new(string name="uvma_obi_memory_base_seq");
    
    super.new(name);
    
 endfunction : new
 
 
-task uvma_obi_base_seq_c::pre_start();
+task uvma_obi_memory_base_seq_c::pre_start();
    
    cfg   = p_sequencer.cfg;
    cntxt = p_sequencer.cntxt;
@@ -67,4 +67,4 @@ task uvma_obi_base_seq_c::pre_start();
 endtask : pre_start
 
 
-`endif // __UVMA_OBI_BASE_SEQ_SV__
+`endif // __UVMA_OBI_MEMORY_BASE_SEQ_SV__

@@ -17,25 +17,25 @@
 // 
 
 
-`ifndef __UVMA_OBI_MSTR_SEQ_ITEM_SV__
-`define __UVMA_OBI_MSTR_SEQ_ITEM_SV__
+`ifndef __UVMA_OBI_MEMORY_MSTR_SEQ_ITEM_SV__
+`define __UVMA_OBI_MEMORY_MSTR_SEQ_ITEM_SV__
 
 
 /**
  * Object created by Open Bus Interface agent sequences extending
- * uvma_obi_mstr_seq_base_c.
+ * uvma_obi_memory_mstr_seq_base_c.
  */
-class uvma_obi_mstr_seq_item_c extends uvma_obi_base_seq_item_c;
+class uvma_obi_memory_mstr_seq_item_c extends uvma_obi_memory_base_seq_item_c;
    
    // Data
-   rand uvma_obi_addr_b_t   address; ///< Read/Write Address
-   rand uvma_obi_data_b_t   wdata  ; ///< Write Data
-        uvma_obi_data_b_t   rdata  ; ///< Read Data
-   rand uvma_obi_be_b_t     be     ; ///< Byte Enable. Is set for the bytes to write/read.
-   rand uvma_obi_auser_b_t  auser  ; ///< Address Phase User signals. Valid for both read and write transactions.
-   rand uvma_obi_wuser_b_t  wuser  ; ///< Additional Address Phase User signals. Only valid for write transactions.
-   rand uvma_obi_ruser_b_t  ruser  ; ///< Response phase User signals. Only valid for read transactions. Undefined for write transactions.
-   rand uvma_obi_id_b_t     id     ; ///< Address/Response Phase transaction identifier.
+   rand uvma_obi_memory_addr_b_t   address; ///< Read/Write Address
+   rand uvma_obi_memory_data_b_t   wdata  ; ///< Write Data
+        uvma_obi_memory_data_b_t   rdata  ; ///< Read Data
+   rand uvma_obi_memory_be_b_t     be     ; ///< Byte Enable. Is set for the bytes to write/read.
+   rand uvma_obi_memory_auser_b_t  auser  ; ///< Address Phase User signals. Valid for both read and write transactions.
+   rand uvma_obi_memory_wuser_b_t  wuser  ; ///< Additional Address Phase User signals. Only valid for write transactions.
+   rand uvma_obi_memory_ruser_b_t  ruser  ; ///< Response phase User signals. Only valid for read transactions. Undefined for write transactions.
+   rand uvma_obi_memory_id_b_t     id     ; ///< Address/Response Phase transaction identifier.
    
    // Metadata
    rand int unsigned  req_latency   ; ///< Number of cycles before req is asserted
@@ -44,7 +44,7 @@ class uvma_obi_mstr_seq_item_c extends uvma_obi_base_seq_item_c;
    rand int unsigned  tail_length   ; ///< Number of idle cycles after rready has been de-asserted
    
    
-   `uvm_object_utils_begin(uvma_obi_mstr_seq_item_c)
+   `uvm_object_utils_begin(uvma_obi_memory_mstr_seq_item_c)
       `uvm_field_int (                           address    , UVM_DEFAULT          )
       `uvm_field_int (                           wdata      , UVM_DEFAULT          )
       `uvm_field_int (                           rdata      , UVM_DEFAULT          )
@@ -79,7 +79,7 @@ class uvma_obi_mstr_seq_item_c extends uvma_obi_base_seq_item_c;
     * Describe rules_cons
     */
    constraint rules_cons {
-      mode == UVMA_OBI_MODE_MSTR;
+      mode == UVMA_OBI_MEMORY_MODE_MSTR;
       be   != '0;
    }
    
@@ -87,16 +87,16 @@ class uvma_obi_mstr_seq_item_c extends uvma_obi_base_seq_item_c;
    /**
     * Default constructor.
     */
-   extern function new(string name="uvma_obi_mstr_seq_item");
+   extern function new(string name="uvma_obi_memory_mstr_seq_item");
    
-endclass : uvma_obi_mstr_seq_item_c
+endclass : uvma_obi_memory_mstr_seq_item_c
 
 
-function uvma_obi_mstr_seq_item_c::new(string name="uvma_obi_mstr_seq_item");
+function uvma_obi_memory_mstr_seq_item_c::new(string name="uvma_obi_memory_mstr_seq_item");
    
    super.new(name);
    
 endfunction : new
 
 
-`endif // __UVMA_OBI_MSTR_SEQ_ITEM_SV__
+`endif // __UVMA_OBI_MEMORY_MSTR_SEQ_ITEM_SV__

@@ -17,28 +17,28 @@
 // 
 
 
-`ifndef __UVMA_OBI_SQR_SV__
-`define __UVMA_OBI_SQR_SV__
+`ifndef __UVMA_OBI_MEMORY_SQR_SV__
+`define __UVMA_OBI_MEMORY_SQR_SV__
 
 
 /**
- * Component running Open Bus Interface sequences extending uvma_obi_base_seq_c.
- * Provides sequence items for uvma_obi_drv_c.
+ * Component running Open Bus Interface sequences extending uvma_obi_memory_base_seq_c.
+ * Provides sequence items for uvma_obi_memory_drv_c.
  */
-class uvma_obi_sqr_c extends uvm_sequencer#(
-   .REQ(uvma_obi_base_seq_item_c),
-   .RSP(uvma_obi_mon_trn_c      )
+class uvma_obi_memory_sqr_c extends uvm_sequencer#(
+   .REQ(uvma_obi_memory_base_seq_item_c),
+   .RSP(uvma_obi_memory_mon_trn_c      )
 );
    
    // Objects
-   uvma_obi_cfg_c    cfg;
-   uvma_obi_cntxt_c  cntxt;
+   uvma_obi_memory_cfg_c    cfg;
+   uvma_obi_memory_cntxt_c  cntxt;
    
    // TLM
-   uvm_tlm_analysis_fifo #(uvma_obi_mon_trn_c)  mon_trn_fifo;
+   uvm_tlm_analysis_fifo #(uvma_obi_memory_mon_trn_c)  mon_trn_fifo;
    
    
-   `uvm_component_utils_begin(uvma_obi_sqr_c)
+   `uvm_component_utils_begin(uvma_obi_memory_sqr_c)
       `uvm_field_object(cfg  , UVM_DEFAULT)
       `uvm_field_object(cntxt, UVM_DEFAULT)
    `uvm_component_utils_end
@@ -47,33 +47,33 @@ class uvma_obi_sqr_c extends uvm_sequencer#(
    /**
     * Default constructor.
     */
-   extern function new(string name="uvma_obi_sqr", uvm_component parent=null);
+   extern function new(string name="uvma_obi_memory_sqr", uvm_component parent=null);
    
    /**
     * Ensures cfg & cntxt handles are not null
     */
    extern virtual function void build_phase(uvm_phase phase);
    
-endclass : uvma_obi_sqr_c
+endclass : uvma_obi_memory_sqr_c
 
 
-function uvma_obi_sqr_c::new(string name="uvma_obi_sqr", uvm_component parent=null);
+function uvma_obi_memory_sqr_c::new(string name="uvma_obi_memory_sqr", uvm_component parent=null);
    
    super.new(name, parent);
    
 endfunction : new
 
 
-function void uvma_obi_sqr_c::build_phase(uvm_phase phase);
+function void uvma_obi_memory_sqr_c::build_phase(uvm_phase phase);
    
    super.build_phase(phase);
    
-   void'(uvm_config_db#(uvma_obi_cfg_c)::get(this, "", "cfg", cfg));
+   void'(uvm_config_db#(uvma_obi_memory_cfg_c)::get(this, "", "cfg", cfg));
    if (!cfg) begin
       `uvm_fatal("CFG", "Configuration handle is null")
    end
    
-   void'(uvm_config_db#(uvma_obi_cntxt_c)::get(this, "", "cntxt", cntxt));
+   void'(uvm_config_db#(uvma_obi_memory_cntxt_c)::get(this, "", "cntxt", cntxt));
    if (!cntxt) begin
       `uvm_fatal("CNTXT", "Context handle is null")
    end
@@ -83,4 +83,4 @@ function void uvma_obi_sqr_c::build_phase(uvm_phase phase);
 endfunction : build_phase
 
 
-`endif // __UVMA_OBI_SQR_SV__
+`endif // __UVMA_OBI_MEMORY_SQR_SV__

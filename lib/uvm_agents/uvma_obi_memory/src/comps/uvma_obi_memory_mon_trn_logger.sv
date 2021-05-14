@@ -17,26 +17,26 @@
 // 
 
 
-`ifndef __UVMA_OBI_MON_TRN_LOGGER_SV__
-`define __UVMA_OBI_MON_TRN_LOGGER_SV__
+`ifndef __UVMA_OBI_MEMORY_MON_TRN_LOGGER_SV__
+`define __UVMA_OBI_MEMORY_MON_TRN_LOGGER_SV__
 
 
 /**
  * Component writing Open Bus Interface monitor transactions debug data to disk as plain text.
  */
-class uvma_obi_mon_trn_logger_c extends uvml_logs_mon_trn_logger_c#(
-   .T_TRN  (uvma_obi_mon_trn_c),
-   .T_CFG  (uvma_obi_cfg_c    ),
-   .T_CNTXT(uvma_obi_cntxt_c  )
+class uvma_obi_memory_mon_trn_logger_c extends uvml_logs_mon_trn_logger_c#(
+   .T_TRN  (uvma_obi_memory_mon_trn_c),
+   .T_CFG  (uvma_obi_memory_cfg_c    ),
+   .T_CNTXT(uvma_obi_memory_cntxt_c  )
 );
    
-   `uvm_component_utils(uvma_obi_mon_trn_logger_c)
+   `uvm_component_utils(uvma_obi_memory_mon_trn_logger_c)
    
    
    /**
     * Default constructor.
     */
-   function new(string name="uvma_obi_mon_trn_logger", uvm_component parent=null);
+   function new(string name="uvma_obi_memory_mon_trn_logger", uvm_component parent=null);
       
       super.new(name, parent);
       
@@ -45,7 +45,7 @@ class uvma_obi_mon_trn_logger_c extends uvml_logs_mon_trn_logger_c#(
    /**
     * Writes contents of t to disk
     */
-   virtual function void write(uvma_obi_mon_trn_c t);
+   virtual function void write(uvma_obi_memory_mon_trn_c t);
       
       string access_str = "";
       string err_str    = "";
@@ -57,8 +57,8 @@ class uvma_obi_mon_trn_logger_c extends uvml_logs_mon_trn_logger_c#(
       string id_str     = "";
       
       case (t.access_type)
-         UVMA_OBI_ACCESS_READ : access_str = "R  ";
-         UVMA_OBI_ACCESS_WRITE: access_str = "  W";
+         UVMA_OBI_MEMORY_ACCESS_READ : access_str = "R  ";
+         UVMA_OBI_MEMORY_ACCESS_WRITE: access_str = "  W";
          default              : access_str = " ? ";
       endcase
       
@@ -68,8 +68,8 @@ class uvma_obi_mon_trn_logger_c extends uvml_logs_mon_trn_logger_c#(
       endcase
       
       case (t.access_type)
-         UVMA_OBI_ACCESS_READ : ruser_str = $sformatf("%h", t.ruser);
-         UVMA_OBI_ACCESS_WRITE: wuser_str = $sformatf("%h", t.wuser);
+         UVMA_OBI_MEMORY_ACCESS_READ : ruser_str = $sformatf("%h", t.ruser);
+         UVMA_OBI_MEMORY_ACCESS_WRITE: wuser_str = $sformatf("%h", t.wuser);
       endcase
       
       data_str  = $sformatf("%b", t.data );
@@ -92,21 +92,21 @@ class uvma_obi_mon_trn_logger_c extends uvml_logs_mon_trn_logger_c#(
       
    endfunction : print_header
    
-endclass : uvma_obi_mon_trn_logger_c
+endclass : uvma_obi_memory_mon_trn_logger_c
 
 
 /**
  * Component writing OBI monitor transactions debug data to disk as JavaScript Object Notation (JSON).
  */
-class uvma_obi_mon_trn_logger_json_c extends uvma_obi_mon_trn_logger_c;
+class uvma_obi_memory_mon_trn_logger_json_c extends uvma_obi_memory_mon_trn_logger_c;
    
-   `uvm_component_utils(uvma_obi_mon_trn_logger_json_c)
+   `uvm_component_utils(uvma_obi_memory_mon_trn_logger_json_c)
    
    
    /**
     * Set file extension to '.json'.
     */
-   function new(string name="uvma_obi_mon_trn_logger_json", uvm_component parent=null);
+   function new(string name="uvma_obi_memory_mon_trn_logger_json", uvm_component parent=null);
       
       super.new(name, parent);
       fextension = "json";
@@ -116,9 +116,9 @@ class uvma_obi_mon_trn_logger_json_c extends uvma_obi_mon_trn_logger_c;
    /**
     * Writes contents of t to disk.
     */
-   virtual function void write(uvma_obi_mon_trn_c t);
+   virtual function void write(uvma_obi_memory_mon_trn_c t);
       
-      // TODO Implement uvma_obi_mon_trn_logger_json_c::write()
+      // TODO Implement uvma_obi_memory_mon_trn_logger_json_c::write()
       // Ex: fwrite({"{",
       //       $sformatf("\"time\":\"%0t\",", $realtime()),
       //       $sformatf("\"a\":%h,"        , t.a        ),
@@ -138,7 +138,7 @@ class uvma_obi_mon_trn_logger_json_c extends uvma_obi_mon_trn_logger_c;
       
    endfunction : print_header
    
-endclass : uvma_obi_mon_trn_logger_json_c
+endclass : uvma_obi_memory_mon_trn_logger_json_c
 
 
-`endif // __UVMA_OBI_MON_TRN_LOGGER_SV__
+`endif // __UVMA_OBI_MEMORY_MON_TRN_LOGGER_SV__

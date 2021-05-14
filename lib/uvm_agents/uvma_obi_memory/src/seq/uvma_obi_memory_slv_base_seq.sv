@@ -17,19 +17,19 @@
 // 
 
 
-`ifndef __UVMA_OBI_SLV_BASE_SEQ_SV__
-`define __UVMA_OBI_SLV_BASE_SEQ_SV__
+`ifndef __UVMA_OBI_MEMORY_SLV_BASE_SEQ_SV__
+`define __UVMA_OBI_MEMORY_SLV_BASE_SEQ_SV__
 
 
 /**
- * TODO Describe uvma_obi_slv_base_seq_c
+ * TODO Describe uvma_obi_memory_slv_base_seq_c
  */
-class uvma_obi_slv_base_seq_c extends uvma_obi_base_seq_c;
+class uvma_obi_memory_slv_base_seq_c extends uvma_obi_memory_base_seq_c;
    
    // Fields
    
    
-   `uvm_object_utils_begin(uvma_obi_slv_base_seq_c)
+   `uvm_object_utils_begin(uvma_obi_memory_slv_base_seq_c)
       
    `uvm_object_utils_end
    
@@ -37,31 +37,31 @@ class uvma_obi_slv_base_seq_c extends uvma_obi_base_seq_c;
    /**
     * Default constructor.
     */
-   extern function new(string name="uvma_obi_slv_base_seq");
+   extern function new(string name="uvma_obi_memory_slv_base_seq");
    
    /**
-    * TODO Describe uvma_obi_slv_base_seq_c::body()
+    * TODO Describe uvma_obi_memory_slv_base_seq_c::body()
     */
    extern task body();
    
    /**
-    * TODO Describe uvma_obi_slv_base_seq_c::do_response()
+    * TODO Describe uvma_obi_memory_slv_base_seq_c::do_response()
     */
-   extern virtual task do_response(ref uvma_obi_mon_trn_c mon_req);
+   extern virtual task do_response(ref uvma_obi_memory_mon_trn_c mon_req);
    
-endclass : uvma_obi_slv_base_seq_c
+endclass : uvma_obi_memory_slv_base_seq_c
 
 
-function uvma_obi_slv_base_seq_c::new(string name="uvma_obi_slv_base_seq");
+function uvma_obi_memory_slv_base_seq_c::new(string name="uvma_obi_memory_slv_base_seq");
    
    super.new(name);
    
 endfunction : new
 
 
-task uvma_obi_slv_base_seq_c::body();
+task uvma_obi_memory_slv_base_seq_c::body();
    
-   uvma_obi_mon_trn_c  mon_trn;
+   uvma_obi_memory_mon_trn_c  mon_trn;
    
    forever begin
       // Wait for the monitor to send us the mstr's "req" with an access request
@@ -73,11 +73,11 @@ task uvma_obi_slv_base_seq_c::body();
 endtask : body
 
 
-task uvma_obi_slv_base_seq_c::do_response(ref uvma_obi_mon_trn_c mon_req);
+task uvma_obi_memory_slv_base_seq_c::do_response(ref uvma_obi_memory_mon_trn_c mon_req);
    
    `uvm_fatal("AXIL_SLV_SEQ", "Call to pure virtual task")
    
 endtask : do_response
 
 
-`endif // __UVMA_OBI_SLV_BASE_SEQ_SV__
+`endif // __UVMA_OBI_MEMORY_SLV_BASE_SEQ_SV__

@@ -25,8 +25,8 @@
  * TODO Describe uvme_obi_st_chkr
  */
 module uvme_obi_st_chkr (
-      uvma_obi_if  mstr_if,
-      uvma_obi_if  slv_if
+      uvma_obi_memory_if  mstr_if,
+      uvma_obi_memory_if  slv_if
 );
    
    // TODO Add assertions to uvme_obi_st_chkr

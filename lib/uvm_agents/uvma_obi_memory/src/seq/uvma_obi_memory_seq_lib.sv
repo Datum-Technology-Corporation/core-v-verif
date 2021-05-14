@@ -17,45 +17,45 @@
 // 
 
 
-`ifndef __UVMA_OBI_SEQ_LIB_SV__
-`define __UVMA_OBI_SEQ_LIB_SV__
+`ifndef __UVMA_OBI_MEMORY_SEQ_LIB_SV__
+`define __UVMA_OBI_MEMORY_SEQ_LIB_SV__
 
 
-`include "uvma_obi_base_seq.sv"
-`include "uvma_obi_mstr_base_seq.sv"
-`include "uvma_obi_slv_base_seq.sv"
-`include "uvma_obi_storage_slv_seq.sv"
+`include "uvma_obi_memory_base_seq.sv"
+`include "uvma_obi_memory_mstr_base_seq.sv"
+`include "uvma_obi_memory_slv_base_seq.sv"
+`include "uvma_obi_memory_storage_slv_seq.sv"
 
 
 /**
  * Object holding sequence library for Open Bus Interface agent.
  */
-class uvma_obi_seq_lib_c extends uvm_sequence_library#(
-   .REQ(uvma_obi_base_seq_item_c),
-   .RSP(uvma_obi_base_seq_item_c)
+class uvma_obi_memory_seq_lib_c extends uvm_sequence_library#(
+   .REQ(uvma_obi_memory_base_seq_item_c),
+   .RSP(uvma_obi_memory_base_seq_item_c)
 );
    
-   `uvm_object_utils          (uvma_obi_seq_lib_c)
-   `uvm_sequence_library_utils(uvma_obi_seq_lib_c)
+   `uvm_object_utils          (uvma_obi_memory_seq_lib_c)
+   `uvm_sequence_library_utils(uvma_obi_memory_seq_lib_c)
    
    
    /**
     * Initializes sequence library
     */
-   extern function new(string name="uvma_obi_seq_lib");
+   extern function new(string name="uvma_obi_memory_seq_lib");
    
-endclass : uvma_obi_seq_lib_c
+endclass : uvma_obi_memory_seq_lib_c
 
 
-function uvma_obi_seq_lib_c::new(string name="uvma_obi_seq_lib");
+function uvma_obi_memory_seq_lib_c::new(string name="uvma_obi_memory_seq_lib");
    
    super.new(name);
    init_sequence_library();
    
-   // TODO Add sequences to uvma_obi_seq_lib_c
-   //      Ex: add_sequence(uvma_obi_abc_seq_c::get_type());
+   // TODO Add sequences to uvma_obi_memory_seq_lib_c
+   //      Ex: add_sequence(uvma_obi_memory_abc_seq_c::get_type());
    
 endfunction : new
 
 
-`endif // __UVMA_OBI_SEQ_LIB_SV__
+`endif // __UVMA_OBI_MEMORY_SEQ_LIB_SV__

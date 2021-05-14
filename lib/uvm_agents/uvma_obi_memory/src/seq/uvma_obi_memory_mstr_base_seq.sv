@@ -17,19 +17,19 @@
 // 
 
 
-`ifndef __UVMA_OBI_MSTR_BASE_SEQ_SV__
-`define __UVMA_OBI_MSTR_BASE_SEQ_SV__
+`ifndef __UVMA_OBI_MEMORY_MSTR_BASE_SEQ_SV__
+`define __UVMA_OBI_MEMORY_MSTR_BASE_SEQ_SV__
 
 
 /**
- * TODO Describe uvma_obi_mstr_base_seq_c
+ * TODO Describe uvma_obi_memory_mstr_base_seq_c
  */
-class uvma_obi_mstr_base_seq_c extends uvma_obi_base_seq_c;
+class uvma_obi_memory_mstr_base_seq_c extends uvma_obi_memory_base_seq_c;
    
    // Fields
    
    
-   `uvm_object_utils_begin(uvma_obi_mstr_base_seq_c)
+   `uvm_object_utils_begin(uvma_obi_memory_mstr_base_seq_c)
       
    `uvm_object_utils_end
    
@@ -37,28 +37,28 @@ class uvma_obi_mstr_base_seq_c extends uvma_obi_base_seq_c;
    /**
     * Default constructor.
     */
-   extern function new(string name="uvma_obi_mstr_base_seq");
+   extern function new(string name="uvma_obi_memory_mstr_base_seq");
    
    /**
-    * TODO Describe uvma_obi_mstr_base_seq_c::body()
+    * TODO Describe uvma_obi_memory_mstr_base_seq_c::body()
     */
    extern virtual task body();
    
-endclass : uvma_obi_mstr_base_seq_c
+endclass : uvma_obi_memory_mstr_base_seq_c
 
 
-function uvma_obi_mstr_base_seq_c::new(string name="uvma_obi_mstr_base_seq");
+function uvma_obi_memory_mstr_base_seq_c::new(string name="uvma_obi_memory_mstr_base_seq");
    
    super.new(name);
    
 endfunction : new
 
 
-task uvma_obi_mstr_base_seq_c::body();
+task uvma_obi_memory_mstr_base_seq_c::body();
    
-   // TODO Implement uvma_obi_mstr_base_seq_c::body()
+   // TODO Implement uvma_obi_memory_mstr_base_seq_c::body()
    
 endtask : body
 
 
-`endif // __UVMA_OBI_MSTR_BASE_SEQ_SV__
+`endif // __UVMA_OBI_MEMORY_MSTR_BASE_SEQ_SV__

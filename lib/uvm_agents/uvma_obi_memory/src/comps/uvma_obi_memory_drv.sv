@@ -17,35 +17,35 @@
 // 
 
 
-`ifndef __UVMA_OBI_DRV_SV__
-`define __UVMA_OBI_DRV_SV__
+`ifndef __UVMA_OBI_MEMORY_DRV_SV__
+`define __UVMA_OBI_MEMORY_DRV_SV__
 
 
 /**
- * Component driving a Open Bus Interface virtual interface (uvma_obi_if).
+ * Component driving a Open Bus Interface virtual interface (uvma_obi_memory_if).
  * @note The req & rsp's roles are switched when this driver is in 'slv' mode.
  * @todo Move implementation to a sequence-based approach
  */
-class uvma_obi_drv_c extends uvm_driver#(
-   .REQ(uvma_obi_base_seq_item_c),
-   .RSP(uvma_obi_mon_trn_c      )
+class uvma_obi_memory_drv_c extends uvm_driver#(
+   .REQ(uvma_obi_memory_base_seq_item_c),
+   .RSP(uvma_obi_memory_mon_trn_c      )
 );
    
    // Objects
-   uvma_obi_cfg_c    cfg;
-   uvma_obi_cntxt_c  cntxt;
+   uvma_obi_memory_cfg_c    cfg;
+   uvma_obi_memory_cntxt_c  cntxt;
    
    // TLM
-   uvm_analysis_port     #(uvma_obi_mstr_seq_item_c)  mstr_ap;
-   uvm_analysis_port     #(uvma_obi_slv_seq_item_c )  slv_ap ;
-   uvm_tlm_analysis_fifo #(uvma_obi_mon_trn_c      )  mon_trn_fifo;
+   uvm_analysis_port     #(uvma_obi_memory_mstr_seq_item_c)  mstr_ap;
+   uvm_analysis_port     #(uvma_obi_memory_slv_seq_item_c )  slv_ap ;
+   uvm_tlm_analysis_fifo #(uvma_obi_memory_mon_trn_c      )  mon_trn_fifo;
    
    // Handles to virtual interface modports
-   virtual uvma_obi_if.active_mstr_mp  vif_mstr_mp;
-   virtual uvma_obi_if.active_slv_mp   vif_slv_mp ;
+   virtual uvma_obi_memory_if.active_mstr_mp  vif_mstr_mp;
+   virtual uvma_obi_memory_if.active_slv_mp   vif_slv_mp ;
    
    
-   `uvm_component_utils_begin(uvma_obi_drv_c)
+   `uvm_component_utils_begin(uvma_obi_memory_drv_c)
       `uvm_field_object(cfg  , UVM_DEFAULT)
       `uvm_field_object(cntxt, UVM_DEFAULT)
    `uvm_component_utils_end
@@ -54,7 +54,7 @@ class uvma_obi_drv_c extends uvm_driver#(
    /**
     * Default constructor.
     */
-   extern function new(string name="uvma_obi_drv", uvm_component parent=null);
+   extern function new(string name="uvma_obi_memory_drv", uvm_component parent=null);
    
    /**
     * 1. Ensures cfg & cntxt handles are not null.
@@ -83,90 +83,90 @@ class uvma_obi_drv_c extends uvm_driver#(
    extern task drv_post_reset(uvm_phase phase);
    
    /**
-    * TODO Describe uvma_obi_drv::get_next_item()
+    * TODO Describe uvma_obi_memory_drv::get_next_item()
     */
-   extern task get_next_item(output uvma_obi_base_seq_item_c req);
+   extern task get_next_item(output uvma_obi_memory_base_seq_item_c req);
    
    /**
     * Drives the virtual interface's (cntxt.vif) signals using req's contents.
     */
-   extern task drv_mstr_req(ref uvma_obi_mstr_seq_item_c req);
+   extern task drv_mstr_req(ref uvma_obi_memory_mstr_seq_item_c req);
    
    /**
     * Drives the virtual interface's (cntxt.vif) signals using req's contents.
     */
-   extern task drv_mstr_read_req(ref uvma_obi_mstr_seq_item_c req);
+   extern task drv_mstr_read_req(ref uvma_obi_memory_mstr_seq_item_c req);
    
    /**
     * Drives the virtual interface's (cntxt.vif) signals using req's contents.
     */
-   extern task drv_mstr_write_req(ref uvma_obi_mstr_seq_item_c req);
+   extern task drv_mstr_write_req(ref uvma_obi_memory_mstr_seq_item_c req);
    
    /**
     * Drives the virtual interface's (cntxt.vif) signals using req's contents.
     */
-   extern task drv_slv_req(ref uvma_obi_slv_seq_item_c req);
+   extern task drv_slv_req(ref uvma_obi_memory_slv_seq_item_c req);
    
    /**
     * Drives the interface's signals using req's contents.
     */
-   extern virtual task drv_slv_read_req(ref uvma_obi_slv_seq_item_c req);
+   extern virtual task drv_slv_read_req(ref uvma_obi_memory_slv_seq_item_c req);
    
    /**
     * Drives the interface's signals using req's contents.
     */
-   extern virtual task drv_slv_write_req(ref uvma_obi_slv_seq_item_c req);
+   extern virtual task drv_slv_write_req(ref uvma_obi_memory_slv_seq_item_c req);
    
    /**
-    * TODO Describe uvma_obi_drv_c::wait_for_rsp()
+    * TODO Describe uvma_obi_memory_drv_c::wait_for_rsp()
     */
-   extern task wait_for_rsp(output uvma_obi_mon_trn_c rsp);
+   extern task wait_for_rsp(output uvma_obi_memory_mon_trn_c rsp);
    
    /**
-    * TODO Describe uvma_obi_drv_c::process_mstr_rsp()
+    * TODO Describe uvma_obi_memory_drv_c::process_mstr_rsp()
     */
-   extern task process_mstr_rsp(ref uvma_obi_mstr_seq_item_c req, ref uvma_obi_mon_trn_c rsp);
+   extern task process_mstr_rsp(ref uvma_obi_memory_mstr_seq_item_c req, ref uvma_obi_memory_mon_trn_c rsp);
    
    /**
-    * TODO Describe uvma_obi_drv_c::process_slv_rsp()
+    * TODO Describe uvma_obi_memory_drv_c::process_slv_rsp()
     */
-   extern task process_slv_rsp(ref uvma_obi_slv_seq_item_c rsp, ref uvma_obi_mon_trn_c req);
+   extern task process_slv_rsp(ref uvma_obi_memory_slv_seq_item_c rsp, ref uvma_obi_memory_mon_trn_c req);
    
    /**
-    * TODO Describe uvma_obi_drv_c::drv_mstr_idle()
+    * TODO Describe uvma_obi_memory_drv_c::drv_mstr_idle()
     */
    extern task drv_mstr_idle();
    
    /**
-    * TODO Describe uvma_obi_drv_c::drv_slv_idle()
+    * TODO Describe uvma_obi_memory_drv_c::drv_slv_idle()
     */
    extern task drv_slv_idle();
    
-endclass : uvma_obi_drv_c
+endclass : uvma_obi_memory_drv_c
 
 
-function uvma_obi_drv_c::new(string name="uvma_obi_drv", uvm_component parent=null);
+function uvma_obi_memory_drv_c::new(string name="uvma_obi_memory_drv", uvm_component parent=null);
    
    super.new(name, parent);
    
 endfunction : new
 
 
-function void uvma_obi_drv_c::build_phase(uvm_phase phase);
+function void uvma_obi_memory_drv_c::build_phase(uvm_phase phase);
    
    super.build_phase(phase);
    
-   void'(uvm_config_db#(uvma_obi_cfg_c)::get(this, "", "cfg", cfg));
+   void'(uvm_config_db#(uvma_obi_memory_cfg_c)::get(this, "", "cfg", cfg));
    if (!cfg) begin
       `uvm_fatal("CFG", "Configuration handle is null")
    end
-   uvm_config_db#(uvma_obi_cfg_c)::set(this, "*", "cfg", cfg);
+   uvm_config_db#(uvma_obi_memory_cfg_c)::set(this, "*", "cfg", cfg);
    
-   void'(uvm_config_db#(uvma_obi_cntxt_c)::get(this, "", "cntxt", cntxt));
+   void'(uvm_config_db#(uvma_obi_memory_cntxt_c)::get(this, "", "cntxt", cntxt));
    if (!cntxt) begin
       `uvm_fatal("CNTXT", "Context handle is null")
    end
-   uvm_config_db#(uvma_obi_cntxt_c)::set(this, "*", "cntxt", cntxt);
+   uvm_config_db#(uvma_obi_memory_cntxt_c)::set(this, "*", "cntxt", cntxt);
    vif_mstr_mp = cntxt.vif.active_mstr_mp;
    vif_slv_mp  = cntxt.vif.active_slv_mp ;
    
@@ -177,7 +177,7 @@ function void uvma_obi_drv_c::build_phase(uvm_phase phase);
 endfunction : build_phase
 
 
-task uvma_obi_drv_c::run_phase(uvm_phase phase);
+task uvma_obi_memory_drv_c::run_phase(uvm_phase phase);
    
    super.run_phase(phase);
    
@@ -187,9 +187,9 @@ task uvma_obi_drv_c::run_phase(uvm_phase phase);
       fork
          begin
             case (cntxt.reset_state)
-               UVMA_OBI_RESET_STATE_PRE_RESET : drv_pre_reset (phase);
-               UVMA_OBI_RESET_STATE_IN_RESET  : drv_in_reset  (phase);
-               UVMA_OBI_RESET_STATE_POST_RESET: drv_post_reset(phase);
+               UVMA_OBI_MEMORY_RESET_STATE_PRE_RESET : drv_pre_reset (phase);
+               UVMA_OBI_MEMORY_RESET_STATE_IN_RESET  : drv_in_reset  (phase);
+               UVMA_OBI_MEMORY_RESET_STATE_POST_RESET: drv_post_reset(phase);
                
                default: `uvm_fatal("OBI_DRV", $sformatf("Invalid reset_state: %0d", cntxt.reset_state))
             endcase
@@ -205,11 +205,11 @@ task uvma_obi_drv_c::run_phase(uvm_phase phase);
 endtask : run_phase
 
 
-task uvma_obi_drv_c::drv_pre_reset(uvm_phase phase);
+task uvma_obi_memory_drv_c::drv_pre_reset(uvm_phase phase);
    
    case (cfg.drv_mode)
-      UVMA_OBI_MODE_MSTR: @(vif_mstr_mp.drv_mstr_cb);
-      UVMA_OBI_MODE_SLV : @(vif_slv_mp .drv_slv_cb );
+      UVMA_OBI_MEMORY_MODE_MSTR: @(vif_mstr_mp.drv_mstr_cb);
+      UVMA_OBI_MEMORY_MODE_SLV : @(vif_slv_mp .drv_slv_cb );
       
       default: `uvm_fatal("OBI_DRV", $sformatf("Invalid drv_mode: %0d", cfg.drv_mode))
    endcase
@@ -217,15 +217,15 @@ task uvma_obi_drv_c::drv_pre_reset(uvm_phase phase);
 endtask : drv_pre_reset
 
 
-task uvma_obi_drv_c::drv_in_reset(uvm_phase phase);
+task uvma_obi_memory_drv_c::drv_in_reset(uvm_phase phase);
    
    case (cfg.drv_mode)
-      UVMA_OBI_MODE_MSTR: begin
+      UVMA_OBI_MEMORY_MODE_MSTR: begin
          @(vif_mstr_mp.drv_mstr_cb);
          drv_mstr_idle();
       end
       
-      UVMA_OBI_MODE_SLV : begin
+      UVMA_OBI_MEMORY_MODE_SLV : begin
          @(vif_slv_mp.drv_slv_cb);
          drv_slv_idle();
       end
@@ -236,15 +236,15 @@ task uvma_obi_drv_c::drv_in_reset(uvm_phase phase);
 endtask : drv_in_reset
 
 
-task uvma_obi_drv_c::drv_post_reset(uvm_phase phase);
+task uvma_obi_memory_drv_c::drv_post_reset(uvm_phase phase);
    
-   uvma_obi_mstr_seq_item_c  mstr_req;
-   uvma_obi_slv_seq_item_c   slv_req;
-   uvma_obi_mon_trn_c        mstr_rsp;
-   uvma_obi_mon_trn_c        slv_rsp;
+   uvma_obi_memory_mstr_seq_item_c  mstr_req;
+   uvma_obi_memory_slv_seq_item_c   slv_req;
+   uvma_obi_memory_mon_trn_c        mstr_rsp;
+   uvma_obi_memory_mon_trn_c        slv_rsp;
    
    case (cfg.drv_mode)
-      UVMA_OBI_MODE_MSTR: begin
+      UVMA_OBI_MEMORY_MODE_MSTR: begin
          // 1. Get next req from sequence and drive it on the vif
          get_next_item(req);
          if (!$cast(mstr_req, req)) begin
@@ -262,7 +262,7 @@ task uvma_obi_drv_c::drv_post_reset(uvm_phase phase);
          seq_item_port.item_done();
       end
       
-      UVMA_OBI_MODE_SLV: begin
+      UVMA_OBI_MEMORY_MODE_SLV: begin
          // 1. Get next req from sequence to reply to mstr and drive it on the vif
          get_next_item(req);
          if (!$cast(slv_req, req)) begin
@@ -284,7 +284,7 @@ task uvma_obi_drv_c::drv_post_reset(uvm_phase phase);
 endtask : drv_post_reset
 
 
-task uvma_obi_drv_c::get_next_item(output uvma_obi_base_seq_item_c req);
+task uvma_obi_memory_drv_c::get_next_item(output uvma_obi_memory_base_seq_item_c req);
    
    seq_item_port.get_next_item(req);
    `uvml_hrtbt()
@@ -301,14 +301,14 @@ task uvma_obi_drv_c::get_next_item(output uvma_obi_base_seq_item_c req);
 endtask : get_next_item
 
 
-task uvma_obi_drv_c::drv_mstr_req(ref uvma_obi_mstr_seq_item_c req);
+task uvma_obi_memory_drv_c::drv_mstr_req(ref uvma_obi_memory_mstr_seq_item_c req);
    
    case (req.access_type)
-      UVMA_OBI_ACCESS_READ: begin
+      UVMA_OBI_MEMORY_ACCESS_READ: begin
          drv_mstr_read_req(req);
       end
       
-      UVMA_OBI_ACCESS_WRITE: begin
+      UVMA_OBI_MEMORY_ACCESS_WRITE: begin
          drv_mstr_write_req(req);
       end
       
@@ -318,7 +318,7 @@ task uvma_obi_drv_c::drv_mstr_req(ref uvma_obi_mstr_seq_item_c req);
 endtask : drv_mstr_req
 
 
-task uvma_obi_drv_c::drv_mstr_read_req(ref uvma_obi_mstr_seq_item_c req);
+task uvma_obi_memory_drv_c::drv_mstr_read_req(ref uvma_obi_memory_mstr_seq_item_c req);
    
    // Req Latency cycles
    repeat (req.req_latency) begin
@@ -379,7 +379,7 @@ task uvma_obi_drv_c::drv_mstr_read_req(ref uvma_obi_mstr_seq_item_c req);
 endtask : drv_mstr_read_req
 
 
-task uvma_obi_drv_c::drv_mstr_write_req(ref uvma_obi_mstr_seq_item_c req);
+task uvma_obi_memory_drv_c::drv_mstr_write_req(ref uvma_obi_memory_mstr_seq_item_c req);
    
    // Req Latency cycles
    repeat (req.req_latency) begin
@@ -444,14 +444,14 @@ task uvma_obi_drv_c::drv_mstr_write_req(ref uvma_obi_mstr_seq_item_c req);
 endtask : drv_mstr_write_req
 
 
-task uvma_obi_drv_c::drv_slv_req(ref uvma_obi_slv_seq_item_c req);
+task uvma_obi_memory_drv_c::drv_slv_req(ref uvma_obi_memory_slv_seq_item_c req);
    
    case (req.access_type)
-      UVMA_OBI_ACCESS_READ: begin
+      UVMA_OBI_MEMORY_ACCESS_READ: begin
          drv_slv_read_req(req);
       end
       
-      UVMA_OBI_ACCESS_WRITE: begin
+      UVMA_OBI_MEMORY_ACCESS_WRITE: begin
          drv_slv_write_req(req);
       end
       
@@ -461,7 +461,7 @@ task uvma_obi_drv_c::drv_slv_req(ref uvma_obi_slv_seq_item_c req);
 endtask : drv_slv_req
 
 
-task uvma_obi_drv_c::drv_slv_read_req(ref uvma_obi_slv_seq_item_c req);
+task uvma_obi_memory_drv_c::drv_slv_read_req(ref uvma_obi_memory_slv_seq_item_c req);
    
    // Latency cycles
    repeat (req.gnt_latency) begin
@@ -506,7 +506,7 @@ task uvma_obi_drv_c::drv_slv_read_req(ref uvma_obi_slv_seq_item_c req);
 endtask : drv_slv_read_req
 
 
-task uvma_obi_drv_c::drv_slv_write_req(ref uvma_obi_slv_seq_item_c req);
+task uvma_obi_memory_drv_c::drv_slv_write_req(ref uvma_obi_memory_slv_seq_item_c req);
    
    // Latency cycles
    repeat (req.gnt_latency) begin
@@ -545,14 +545,14 @@ task uvma_obi_drv_c::drv_slv_write_req(ref uvma_obi_slv_seq_item_c req);
 endtask : drv_slv_write_req
 
 
-task uvma_obi_drv_c::wait_for_rsp(output uvma_obi_mon_trn_c rsp);
+task uvma_obi_memory_drv_c::wait_for_rsp(output uvma_obi_memory_mon_trn_c rsp);
    
    mon_trn_fifo.get(rsp);
    
 endtask : wait_for_rsp
 
 
-task uvma_obi_drv_c::process_mstr_rsp(ref uvma_obi_mstr_seq_item_c req, ref uvma_obi_mon_trn_c rsp);
+task uvma_obi_memory_drv_c::process_mstr_rsp(ref uvma_obi_memory_mstr_seq_item_c req, ref uvma_obi_memory_mon_trn_c rsp);
    
    req.rdata       = rsp.data;
    req.__has_error = rsp.err ;
@@ -560,22 +560,22 @@ task uvma_obi_drv_c::process_mstr_rsp(ref uvma_obi_mstr_seq_item_c req, ref uvma
 endtask : process_mstr_rsp
 
 
-task uvma_obi_drv_c::process_slv_rsp(ref uvma_obi_slv_seq_item_c rsp, ref uvma_obi_mon_trn_c req);
+task uvma_obi_memory_drv_c::process_slv_rsp(ref uvma_obi_memory_slv_seq_item_c rsp, ref uvma_obi_memory_mon_trn_c req);
    
    rsp.orig_trn = req;
    
 endtask : process_slv_rsp
 
 
-task uvma_obi_drv_c::drv_mstr_idle();
+task uvma_obi_memory_drv_c::drv_mstr_idle();
    
    vif_mstr_mp.drv_mstr_cb.req    <= '0;
    vif_mstr_mp.drv_mstr_cb.rready <= '0;
    
    case (cfg.drv_idle)
-      UVMA_OBI_DRV_IDLE_SAME: ;// Do nothing;
+      UVMA_OBI_MEMORY_DRV_IDLE_SAME: ;// Do nothing;
       
-      UVMA_OBI_DRV_IDLE_ZEROS: begin
+      UVMA_OBI_MEMORY_DRV_IDLE_ZEROS: begin
          vif_mstr_mp.drv_mstr_cb.addr  <= '0;
          vif_mstr_mp.drv_mstr_cb.we    <= '0;
          vif_mstr_mp.drv_mstr_cb.be    <= '0;
@@ -585,7 +585,7 @@ task uvma_obi_drv_c::drv_mstr_idle();
          vif_mstr_mp.drv_mstr_cb.aid   <= '0;
       end
       
-      UVMA_OBI_DRV_IDLE_RANDOM: begin
+      UVMA_OBI_MEMORY_DRV_IDLE_RANDOM: begin
          vif_mstr_mp.drv_mstr_cb.addr  <= $urandom();
          vif_mstr_mp.drv_mstr_cb.we    <= $urandom();
          vif_mstr_mp.drv_mstr_cb.be    <= $urandom();
@@ -595,7 +595,7 @@ task uvma_obi_drv_c::drv_mstr_idle();
          vif_mstr_mp.drv_mstr_cb.aid   <= $urandom();
       end
       
-      UVMA_OBI_DRV_IDLE_X: begin
+      UVMA_OBI_MEMORY_DRV_IDLE_X: begin
          vif_mstr_mp.drv_mstr_cb.addr  <= 'X;
          vif_mstr_mp.drv_mstr_cb.we    <= 'X;
          vif_mstr_mp.drv_mstr_cb.be    <= 'X;
@@ -605,7 +605,7 @@ task uvma_obi_drv_c::drv_mstr_idle();
          vif_mstr_mp.drv_mstr_cb.aid   <= 'X;
       end
       
-      UVMA_OBI_DRV_IDLE_Z: begin
+      UVMA_OBI_MEMORY_DRV_IDLE_Z: begin
          vif_mstr_mp.drv_mstr_cb.addr  <= 'Z;
          vif_mstr_mp.drv_mstr_cb.we    <= 'Z;
          vif_mstr_mp.drv_mstr_cb.be    <= 'Z;
@@ -621,33 +621,33 @@ task uvma_obi_drv_c::drv_mstr_idle();
 endtask : drv_mstr_idle
 
 
-task uvma_obi_drv_c::drv_slv_idle();
+task uvma_obi_memory_drv_c::drv_slv_idle();
    
    case (cfg.drv_idle)
-      UVMA_OBI_DRV_IDLE_SAME: ;// Do nothing;
+      UVMA_OBI_MEMORY_DRV_IDLE_SAME: ;// Do nothing;
       
-      UVMA_OBI_DRV_IDLE_ZEROS: begin
+      UVMA_OBI_MEMORY_DRV_IDLE_ZEROS: begin
          vif_slv_mp.drv_slv_cb.rdata <= '0;
          vif_slv_mp.drv_slv_cb.err   <= '0;
          vif_slv_mp.drv_slv_cb.ruser <= '0;
          vif_slv_mp.drv_slv_cb.rid   <= '0;
       end
       
-      UVMA_OBI_DRV_IDLE_RANDOM: begin
+      UVMA_OBI_MEMORY_DRV_IDLE_RANDOM: begin
          vif_slv_mp.drv_slv_cb.rdata <= $urandom();
          vif_slv_mp.drv_slv_cb.err   <= $urandom();
          vif_slv_mp.drv_slv_cb.ruser <= $urandom();
          vif_slv_mp.drv_slv_cb.rid   <= $urandom();
       end
       
-      UVMA_OBI_DRV_IDLE_X: begin
+      UVMA_OBI_MEMORY_DRV_IDLE_X: begin
          vif_slv_mp.drv_slv_cb.rdata <= 'X;
          vif_slv_mp.drv_slv_cb.err   <= 'X;
          vif_slv_mp.drv_slv_cb.ruser <= 'X;
          vif_slv_mp.drv_slv_cb.rid   <= 'X;
       end
       
-      UVMA_OBI_DRV_IDLE_Z: begin
+      UVMA_OBI_MEMORY_DRV_IDLE_Z: begin
          vif_slv_mp.drv_slv_cb.rdata <= 'Z;
          vif_slv_mp.drv_slv_cb.err   <= 'Z;
          vif_slv_mp.drv_slv_cb.ruser <= 'Z;
@@ -660,4 +660,4 @@ task uvma_obi_drv_c::drv_slv_idle();
 endtask : drv_slv_idle
 
 
-`endif // __UVMA_OBI_DRV_SV__
+`endif // __UVMA_OBI_MEMORY_DRV_SV__

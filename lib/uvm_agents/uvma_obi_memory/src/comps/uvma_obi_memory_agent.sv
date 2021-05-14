@@ -17,35 +17,35 @@
 // 
 
 
-`ifndef __UVMA_OBI_AGENT_SV__
-`define __UVMA_OBI_AGENT_SV__
+`ifndef __UVMA_OBI_MEMORY_AGENT_SV__
+`define __UVMA_OBI_MEMORY_AGENT_SV__
 
 
 /**
  * Top-level component that encapsulates, builds and connects all others.
  * Capable of driving/monitoring Open Bus Interface interface.
  */
-class uvma_obi_agent_c extends uvm_agent;
+class uvma_obi_memory_agent_c extends uvm_agent;
    
    // Objects
-   uvma_obi_cfg_c    cfg;
-   uvma_obi_cntxt_c  cntxt;
+   uvma_obi_memory_cfg_c    cfg;
+   uvma_obi_memory_cntxt_c  cntxt;
    
    // Components
-   uvma_obi_drv_c              driver;
-   uvma_obi_mon_c              monitor;
-   uvma_obi_sqr_c              sequencer;
-   uvma_obi_cov_model_c        cov_model;
-   uvma_obi_seq_item_logger_c  seq_item_logger;
-   uvma_obi_mon_trn_logger_c   mon_trn_logger;
+   uvma_obi_memory_drv_c              driver;
+   uvma_obi_memory_mon_c              monitor;
+   uvma_obi_memory_sqr_c              sequencer;
+   uvma_obi_memory_cov_model_c        cov_model;
+   uvma_obi_memory_seq_item_logger_c  seq_item_logger;
+   uvma_obi_memory_mon_trn_logger_c   mon_trn_logger;
    
    // TLM
-   uvm_analysis_port#(uvma_obi_mstr_seq_item_c)  drv_mstr_ap;
-   uvm_analysis_port#(uvma_obi_slv_seq_item_c )  drv_slv_ap ;
-   uvm_analysis_port#(uvma_obi_mon_trn_c      )  mon_ap     ;
+   uvm_analysis_port#(uvma_obi_memory_mstr_seq_item_c)  drv_mstr_ap;
+   uvm_analysis_port#(uvma_obi_memory_slv_seq_item_c )  drv_slv_ap ;
+   uvm_analysis_port#(uvma_obi_memory_mon_trn_c      )  mon_ap     ;
    
    
-   `uvm_component_utils_begin(uvma_obi_agent_c)
+   `uvm_component_utils_begin(uvma_obi_memory_agent_c)
       `uvm_field_object(cfg  , UVM_DEFAULT)
       `uvm_field_object(cntxt, UVM_DEFAULT)
    `uvm_component_utils_end
@@ -54,7 +54,7 @@ class uvma_obi_agent_c extends uvm_agent;
    /**
     * Default constructor.
     */
-   extern function new(string name="uvma_obi_agent", uvm_component parent=null);
+   extern function new(string name="uvma_obi_memory_agent", uvm_component parent=null);
    
    /**
     * 1. Ensures cfg & cntxt handles are not null
@@ -114,17 +114,17 @@ class uvma_obi_agent_c extends uvm_agent;
     */
    extern function void connect_trn_loggers();
    
-endclass : uvma_obi_agent_c
+endclass : uvma_obi_memory_agent_c
 
 
-function uvma_obi_agent_c::new(string name="uvma_obi_agent", uvm_component parent=null);
+function uvma_obi_memory_agent_c::new(string name="uvma_obi_memory_agent", uvm_component parent=null);
    
    super.new(name, parent);
    
 endfunction : new
 
 
-function void uvma_obi_agent_c::build_phase(uvm_phase phase);
+function void uvma_obi_memory_agent_c::build_phase(uvm_phase phase);
    
    super.build_phase(phase);
    
@@ -136,7 +136,7 @@ function void uvma_obi_agent_c::build_phase(uvm_phase phase);
 endfunction : build_phase
 
 
-function void uvma_obi_agent_c::connect_phase(uvm_phase phase);
+function void uvma_obi_memory_agent_c::connect_phase(uvm_phase phase);
    
    super.connect_phase(phase);
    
@@ -154,35 +154,35 @@ function void uvma_obi_agent_c::connect_phase(uvm_phase phase);
 endfunction: connect_phase
 
 
-function void uvma_obi_agent_c::get_and_set_cfg();
+function void uvma_obi_memory_agent_c::get_and_set_cfg();
    
-   void'(uvm_config_db#(uvma_obi_cfg_c)::get(this, "", "cfg", cfg));
+   void'(uvm_config_db#(uvma_obi_memory_cfg_c)::get(this, "", "cfg", cfg));
    if (!cfg) begin
       `uvm_fatal("CFG", "Configuration handle is null")
    end
    else begin
       `uvm_info("CFG", $sformatf("Found configuration handle:\n%s", cfg.sprint()), UVM_DEBUG)
-      uvm_config_db#(uvma_obi_cfg_c)::set(this, "*", "cfg", cfg);
+      uvm_config_db#(uvma_obi_memory_cfg_c)::set(this, "*", "cfg", cfg);
    end
    
 endfunction : get_and_set_cfg
 
 
-function void uvma_obi_agent_c::get_and_set_cntxt();
+function void uvma_obi_memory_agent_c::get_and_set_cntxt();
    
-   void'(uvm_config_db#(uvma_obi_cntxt_c)::get(this, "", "cntxt", cntxt));
+   void'(uvm_config_db#(uvma_obi_memory_cntxt_c)::get(this, "", "cntxt", cntxt));
    if (!cntxt) begin
       `uvm_info("CNTXT", "Context handle is null; creating.", UVM_DEBUG)
-      cntxt = uvma_obi_cntxt_c::type_id::create("cntxt");
+      cntxt = uvma_obi_memory_cntxt_c::type_id::create("cntxt");
    end
-   uvm_config_db#(uvma_obi_cntxt_c)::set(this, "*", "cntxt", cntxt);
+   uvm_config_db#(uvma_obi_memory_cntxt_c)::set(this, "*", "cntxt", cntxt);
    
 endfunction : get_and_set_cntxt
 
 
-function void uvma_obi_agent_c::retrieve_vif();
+function void uvma_obi_memory_agent_c::retrieve_vif();
    
-   if (!uvm_config_db#(virtual uvma_obi_if)::get(this, "", "vif", cntxt.vif)) begin
+   if (!uvm_config_db#(virtual uvma_obi_memory_if)::get(this, "", "vif", cntxt.vif)) begin
       `uvm_fatal("VIF", $sformatf("Could not find vif handle of type %s in uvm_config_db", $typename(cntxt.vif)))
    end
    else begin
@@ -192,19 +192,19 @@ function void uvma_obi_agent_c::retrieve_vif();
 endfunction : retrieve_vif
 
 
-function void uvma_obi_agent_c::create_components();
+function void uvma_obi_memory_agent_c::create_components();
    
-   monitor         = uvma_obi_mon_c            ::type_id::create("monitor"        , this);
-   sequencer       = uvma_obi_sqr_c            ::type_id::create("sequencer"      , this);
-   driver          = uvma_obi_drv_c            ::type_id::create("driver"         , this);
-   cov_model       = uvma_obi_cov_model_c      ::type_id::create("cov_model"      , this);
-   mon_trn_logger  = uvma_obi_mon_trn_logger_c ::type_id::create("mon_trn_logger" , this);
-   seq_item_logger = uvma_obi_seq_item_logger_c::type_id::create("seq_item_logger", this);
+   monitor         = uvma_obi_memory_mon_c            ::type_id::create("monitor"        , this);
+   sequencer       = uvma_obi_memory_sqr_c            ::type_id::create("sequencer"      , this);
+   driver          = uvma_obi_memory_drv_c            ::type_id::create("driver"         , this);
+   cov_model       = uvma_obi_memory_cov_model_c      ::type_id::create("cov_model"      , this);
+   mon_trn_logger  = uvma_obi_memory_mon_trn_logger_c ::type_id::create("mon_trn_logger" , this);
+   seq_item_logger = uvma_obi_memory_seq_item_logger_c::type_id::create("seq_item_logger", this);
    
 endfunction : create_components
 
 
-function void uvma_obi_agent_c::connect_analysis_ports();
+function void uvma_obi_memory_agent_c::connect_analysis_ports();
    
    drv_mstr_ap = driver .mstr_ap;
    drv_slv_ap  = driver .slv_ap ;
@@ -213,7 +213,7 @@ function void uvma_obi_agent_c::connect_analysis_ports();
 endfunction : connect_analysis_ports
 
 
-function void uvma_obi_agent_c::connect_sequencer_and_driver();
+function void uvma_obi_memory_agent_c::connect_sequencer_and_driver();
    
    sequencer.set_arbitration(cfg.sqr_arb_mode);
    driver.seq_item_port.connect(sequencer.seq_item_export);
@@ -221,7 +221,7 @@ function void uvma_obi_agent_c::connect_sequencer_and_driver();
 endfunction : connect_sequencer_and_driver
 
 
-function void uvma_obi_agent_c::connect_rsp_path();
+function void uvma_obi_memory_agent_c::connect_rsp_path();
    
    monitor.ap          .connect(driver   .mon_trn_fifo.analysis_export);
    monitor.sequencer_ap.connect(sequencer.mon_trn_fifo.analysis_export);
@@ -229,7 +229,7 @@ function void uvma_obi_agent_c::connect_rsp_path();
 endfunction : connect_rsp_path
 
 
-function void uvma_obi_agent_c::connect_cov_model();
+function void uvma_obi_memory_agent_c::connect_cov_model();
    
    drv_mstr_ap.connect(cov_model.mstr_seq_item_fifo.analysis_export);
    drv_slv_ap .connect(cov_model.slv_seq_item_fifo .analysis_export);
@@ -238,7 +238,7 @@ function void uvma_obi_agent_c::connect_cov_model();
 endfunction : connect_cov_model
 
 
-function void uvma_obi_agent_c::connect_trn_loggers();
+function void uvma_obi_memory_agent_c::connect_trn_loggers();
    
    drv_mstr_ap.connect(seq_item_logger.analysis_export);
    drv_slv_ap .connect(seq_item_logger.analysis_export);
@@ -247,4 +247,4 @@ function void uvma_obi_agent_c::connect_trn_loggers();
 endfunction : connect_trn_loggers
 
 
-`endif // __UVMA_OBI_AGENT_SV__
+`endif // __UVMA_OBI_MEMORY_AGENT_SV__

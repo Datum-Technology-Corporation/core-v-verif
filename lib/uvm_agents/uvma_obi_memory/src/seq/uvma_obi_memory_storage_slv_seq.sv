@@ -17,23 +17,23 @@
 // 
 
 
-`ifndef __UVMA_OBI_STORAGE_SLV_SEQ_SV__
-`define __UVMA_OBI_STORAGE_SLV_SEQ_SV__
+`ifndef __UVMA_OBI_MEMORY_STORAGE_SLV_SEQ_SV__
+`define __UVMA_OBI_MEMORY_STORAGE_SLV_SEQ_SV__
 
 
 /**
  * 'slv' sequence that reads back '0' as data, unless the address has been
  * written to.
  */
-class uvma_obi_storage_slv_seq_c extends uvma_obi_slv_base_seq_c;
+class uvma_obi_memory_storage_slv_seq_c extends uvma_obi_memory_slv_base_seq_c;
    
    // Fields
    rand longint unsigned  min_address;
    rand longint unsigned  max_address;
-   uvma_obi_data_b_t      mem[int unsigned];
+   uvma_obi_memory_data_b_t      mem[int unsigned];
    
    
-   `uvm_object_utils_begin(uvma_obi_storage_slv_seq_c)
+   `uvm_object_utils_begin(uvma_obi_memory_storage_slv_seq_c)
       `uvm_field_int(min_address, UVM_DEFAULT)
       `uvm_field_int(max_address, UVM_DEFAULT)
       `uvm_field_aa_int_int_unsigned(mem, UVM_DEFAULT)
@@ -52,28 +52,28 @@ class uvma_obi_storage_slv_seq_c extends uvma_obi_slv_base_seq_c;
    /**
     * Default constructor.
     */
-   extern function new(string name="uvma_obi_storage_slv_seq");
+   extern function new(string name="uvma_obi_memory_storage_slv_seq");
    
    /**
-    * TODO Describe uvma_obi_storage_slv_seq_c::do_response()
+    * TODO Describe uvma_obi_memory_storage_slv_seq_c::do_response()
     */
-   extern virtual task do_response(ref uvma_obi_mon_trn_c mon_req);
+   extern virtual task do_response(ref uvma_obi_memory_mon_trn_c mon_req);
    
-endclass : uvma_obi_storage_slv_seq_c
+endclass : uvma_obi_memory_storage_slv_seq_c
 
 
-function uvma_obi_storage_slv_seq_c::new(string name="uvma_obi_storage_slv_seq");
+function uvma_obi_memory_storage_slv_seq_c::new(string name="uvma_obi_memory_storage_slv_seq");
    
    super.new(name);
    
 endfunction : new
 
 
-task uvma_obi_storage_slv_seq_c::do_response(ref uvma_obi_mon_trn_c mon_req);
+task uvma_obi_memory_storage_slv_seq_c::do_response(ref uvma_obi_memory_mon_trn_c mon_req);
    
-   uvma_obi_addr_b_t        addr  = 0;
+   uvma_obi_memory_addr_b_t        addr  = 0;
    bit                      error = 0;
-   uvma_obi_slv_seq_item_c  _req;
+   uvma_obi_memory_slv_seq_item_c  _req;
    
    // Ignore malformed requests
    if (mon_req.__has_error) begin
@@ -88,12 +88,12 @@ task uvma_obi_storage_slv_seq_c::do_response(ref uvma_obi_mon_trn_c mon_req);
       addr[ii] = mon_req.address[ii];
    end
    case (mon_req.access_type)
-      UVMA_OBI_ACCESS_READ: begin
+      UVMA_OBI_MEMORY_ACCESS_READ: begin
          if (mem.exists(addr)) begin
             // The following code is currently incompatible with xsim (2020.2)
             // Temporary replacement below
             //`uvm_do_with(_req, {
-            //   _req.access_type == UVMA_OBI_ACCESS_READ;
+            //   _req.access_type == UVMA_OBI_MEMORY_ACCESS_READ;
             //   _req.err         == error;
             //   foreach (_req.rdata[ii]) {
             //      if (ii < cfg.data_width) {
@@ -103,7 +103,7 @@ task uvma_obi_storage_slv_seq_c::do_response(ref uvma_obi_mon_trn_c mon_req);
             //})
             `uvm_create(_req)
             //if (_req.randomize()) begin
-               _req.access_type    = UVMA_OBI_ACCESS_READ;
+               _req.access_type    = UVMA_OBI_MEMORY_ACCESS_READ;
                _req.err            = error;
                _req.gnt_latency    = 1;
                _req.access_latency = 1;
@@ -124,7 +124,7 @@ task uvma_obi_storage_slv_seq_c::do_response(ref uvma_obi_mon_trn_c mon_req);
             // The following code is currently incompatible with xsim (2020.2)
             // Temporary replacement below
             //`uvm_do_with(_req, {
-            //   _req.access_type == UVMA_OBI_ACCESS_READ;
+            //   _req.access_type == UVMA_OBI_MEMORY_ACCESS_READ;
             //   _req.err         == error;
             //   foreach (_req.rdata[ii]) {
             //      _req.rdata[ii] == 1'b0;
@@ -132,7 +132,7 @@ task uvma_obi_storage_slv_seq_c::do_response(ref uvma_obi_mon_trn_c mon_req);
             //})
             `uvm_create(_req)
             //if (_req.randomize()) begin
-               _req.access_type    = UVMA_OBI_ACCESS_READ;
+               _req.access_type    = UVMA_OBI_MEMORY_ACCESS_READ;
                _req.err            = error;
                _req.rdata          = 0;
                _req.gnt_latency    = 1;
@@ -147,7 +147,7 @@ task uvma_obi_storage_slv_seq_c::do_response(ref uvma_obi_mon_trn_c mon_req);
          end
       end
       
-      UVMA_OBI_ACCESS_WRITE: begin
+      UVMA_OBI_MEMORY_ACCESS_WRITE: begin
          if (!error) begin
             foreach (mon_req.data[ii]) begin
                if (ii < cfg.data_width) begin
@@ -158,7 +158,7 @@ task uvma_obi_storage_slv_seq_c::do_response(ref uvma_obi_mon_trn_c mon_req);
          // The following code is currently incompatible with xsim (2020.3)
          // Temporary replacement below
          //`uvm_do_with(_req, {
-         //   _req.access_type    == UVMA_OBI_ACCESS_WRITE;
+         //   _req.access_type    == UVMA_OBI_MEMORY_ACCESS_WRITE;
          //   _req.err            == error;
          //   _req.gnt_latency    == 1;
          //   _req.access_latency == 1;
@@ -166,7 +166,7 @@ task uvma_obi_storage_slv_seq_c::do_response(ref uvma_obi_mon_trn_c mon_req);
          //   _req.tail_length    == 1;
          //})
          `uvm_create(_req)
-         _req.access_type    = UVMA_OBI_ACCESS_WRITE;
+         _req.access_type    = UVMA_OBI_MEMORY_ACCESS_WRITE;
          _req.err            = error;
          _req.gnt_latency    = 1;
          _req.access_latency = 1;
@@ -181,4 +181,4 @@ task uvma_obi_storage_slv_seq_c::do_response(ref uvma_obi_mon_trn_c mon_req);
 endtask : do_response
 
 
-`endif // __UVMA_OBI_STORAGE_SLV_SEQ_SV__
+`endif // __UVMA_OBI_MEMORY_STORAGE_SLV_SEQ_SV__

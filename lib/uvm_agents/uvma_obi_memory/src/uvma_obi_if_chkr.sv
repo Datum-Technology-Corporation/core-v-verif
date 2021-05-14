@@ -17,20 +17,20 @@
 // 
 
 
-`ifndef __UVMA_OBI_IF_CHKR_SV__
-`define __UVMA_OBI_IF_CHKR_SV__
+`ifndef __UVMA_OBI_MEMORY_IF_CHKR_SV__
+`define __UVMA_OBI_MEMORY_IF_CHKR_SV__
 
 
 /**
- * Encapsulates assertions targeting uvma_obi_if.
+ * Encapsulates assertions targeting uvma_obi_memory_if.
  */
-module uvma_obi_if_chkr(
-   uvma_obi_if  obi_if
+module uvma_obi_memory_if_chkr(
+   uvma_obi_memory_if  obi_if
 );
    
-   // TODO Add assertions to uvma_obi_if_chkr
+   // TODO Add assertions to uvma_obi_memory_if_chkr
    
-endmodule : uvma_obi_if_chkr
+endmodule : uvma_obi_memory_if_chkr
 
 
-`endif // __UVMA_OBI_IF_CHKR_SV__
+`endif // __UVMA_OBI_MEMORY_IF_CHKR_SV__

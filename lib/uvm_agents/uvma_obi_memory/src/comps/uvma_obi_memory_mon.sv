@@ -17,29 +17,29 @@
 // 
 
 
-`ifndef __UVMA_OBI_MON_SV__
-`define __UVMA_OBI_MON_SV__
+`ifndef __UVMA_OBI_MEMORY_MON_SV__
+`define __UVMA_OBI_MEMORY_MON_SV__
 
 
 /**
  * Component sampling transactions from a Open Bus Interface virtual interface
- * (uvma_obi_if).
+ * (uvma_obi_memory_if).
  */
-class uvma_obi_mon_c extends uvm_monitor;
+class uvma_obi_memory_mon_c extends uvm_monitor;
    
    // Objects
-   uvma_obi_cfg_c    cfg;
-   uvma_obi_cntxt_c  cntxt;
+   uvma_obi_memory_cfg_c    cfg;
+   uvma_obi_memory_cntxt_c  cntxt;
    
    // TLM
-   uvm_analysis_port#(uvma_obi_mon_trn_c)  ap;
-   uvm_analysis_port#(uvma_obi_mon_trn_c)  sequencer_ap;
+   uvm_analysis_port#(uvma_obi_memory_mon_trn_c)  ap;
+   uvm_analysis_port#(uvma_obi_memory_mon_trn_c)  sequencer_ap;
    
    // Handles to virtual interface modport
-   virtual uvma_obi_if.passive_mp  vif_passive_mp;
+   virtual uvma_obi_memory_if.passive_mp  vif_passive_mp;
    
    
-   `uvm_component_utils_begin(uvma_obi_mon_c)
+   `uvm_component_utils_begin(uvma_obi_memory_mon_c)
       `uvm_field_object(cfg  , UVM_DEFAULT)
       `uvm_field_object(cntxt, UVM_DEFAULT)
    `uvm_component_utils_end
@@ -48,7 +48,7 @@ class uvma_obi_mon_c extends uvm_monitor;
    /**
     * Default constructor.
     */
-   extern function new(string name="uvma_obi_mon", uvm_component parent=null);
+   extern function new(string name="uvma_obi_memory_mon", uvm_component parent=null);
    
    /**
     * 1. Ensures cfg & cntxt handles are not null.
@@ -57,7 +57,7 @@ class uvma_obi_mon_c extends uvm_monitor;
    extern virtual function void build_phase(uvm_phase phase);
    
    /**
-    * TODO Describe uvma_obi_mon_c::run_phase()
+    * TODO Describe uvma_obi_memory_mon_c::run_phase()
     */
    extern virtual task run_phase(uvm_phase phase);
    
@@ -67,65 +67,65 @@ class uvma_obi_mon_c extends uvm_monitor;
    extern task observe_reset();
    
    /**
-    * TODO Describe uvma_obi_mon_c::mon_pre_reset()
+    * TODO Describe uvma_obi_memory_mon_c::mon_pre_reset()
     */
    extern task mon_pre_reset(uvm_phase phase);
    
    /**
-    * TODO Describe uvma_obi_mon_c::mon_in_reset()
+    * TODO Describe uvma_obi_memory_mon_c::mon_in_reset()
     */
    extern task mon_in_reset(uvm_phase phase);
    
    /**
-    * TODO Describe uvma_obi_mon_c::mon_post_reset()
+    * TODO Describe uvma_obi_memory_mon_c::mon_post_reset()
     */
    extern task mon_post_reset(uvm_phase phase);
    
    /**
-    * TODO Describe uvma_obi_mon_c::mon_trn()
+    * TODO Describe uvma_obi_memory_mon_c::mon_trn()
     */
-   extern task mon_trn(output uvma_obi_mon_trn_c trn);
+   extern task mon_trn(output uvma_obi_memory_mon_trn_c trn);
    
    /**
-    * TODO Describe uvma_obi_mon_c::process_trn()
+    * TODO Describe uvma_obi_memory_mon_c::process_trn()
     */
-   extern function void process_trn(ref uvma_obi_mon_trn_c trn);
+   extern function void process_trn(ref uvma_obi_memory_mon_trn_c trn);
    
    /**
-    * TODO Describe uvma_obi_mon_c::send_trn_to_sequencer()
+    * TODO Describe uvma_obi_memory_mon_c::send_trn_to_sequencer()
     */
-   extern task send_trn_to_sequencer(ref uvma_obi_mon_trn_c trn);
+   extern task send_trn_to_sequencer(ref uvma_obi_memory_mon_trn_c trn);
    
    /**
-    * TODO Describe uvma_obi_mon_c::check_signals_same()
+    * TODO Describe uvma_obi_memory_mon_c::check_signals_same()
     */
-   extern task check_signals_same(ref uvma_obi_mon_trn_c trn);
+   extern task check_signals_same(ref uvma_obi_memory_mon_trn_c trn);
    
    /**
-    * TODO Describe uvma_obi_mon_c::sample_trn_from_vif()
+    * TODO Describe uvma_obi_memory_mon_c::sample_trn_from_vif()
     */
-   extern task sample_trn_from_vif(output uvma_obi_mon_trn_c trn);
+   extern task sample_trn_from_vif(output uvma_obi_memory_mon_trn_c trn);
    
-endclass : uvma_obi_mon_c
+endclass : uvma_obi_memory_mon_c
 
 
-function uvma_obi_mon_c::new(string name="uvma_obi_mon", uvm_component parent=null);
+function uvma_obi_memory_mon_c::new(string name="uvma_obi_memory_mon", uvm_component parent=null);
    
    super.new(name, parent);
    
 endfunction : new
 
 
-function void uvma_obi_mon_c::build_phase(uvm_phase phase);
+function void uvma_obi_memory_mon_c::build_phase(uvm_phase phase);
    
    super.build_phase(phase);
    
-   void'(uvm_config_db#(uvma_obi_cfg_c)::get(this, "", "cfg", cfg));
+   void'(uvm_config_db#(uvma_obi_memory_cfg_c)::get(this, "", "cfg", cfg));
    if (!cfg) begin
       `uvm_fatal("CFG", "Configuration handle is null")
    end
    
-   void'(uvm_config_db#(uvma_obi_cntxt_c)::get(this, "", "cntxt", cntxt));
+   void'(uvm_config_db#(uvma_obi_memory_cntxt_c)::get(this, "", "cntxt", cntxt));
    if (!cntxt) begin
       `uvm_fatal("CNTXT", "Context handle is null")
    end
@@ -137,7 +137,7 @@ function void uvma_obi_mon_c::build_phase(uvm_phase phase);
 endfunction : build_phase
 
 
-task uvma_obi_mon_c::run_phase(uvm_phase phase);
+task uvma_obi_memory_mon_c::run_phase(uvm_phase phase);
    
    super.run_phase(phase);
    
@@ -151,9 +151,9 @@ task uvma_obi_mon_c::run_phase(uvm_phase phase);
             fork
                begin
                   case (cntxt.reset_state)
-                     UVMA_OBI_RESET_STATE_PRE_RESET : mon_pre_reset (phase);
-                     UVMA_OBI_RESET_STATE_IN_RESET  : mon_in_reset  (phase);
-                     UVMA_OBI_RESET_STATE_POST_RESET: mon_post_reset(phase);
+                     UVMA_OBI_MEMORY_RESET_STATE_PRE_RESET : mon_pre_reset (phase);
+                     UVMA_OBI_MEMORY_RESET_STATE_IN_RESET  : mon_in_reset  (phase);
+                     UVMA_OBI_MEMORY_RESET_STATE_POST_RESET: mon_post_reset(phase);
                   endcase
                end
                
@@ -169,7 +169,7 @@ task uvma_obi_mon_c::run_phase(uvm_phase phase);
 endtask : run_phase
 
 
-task uvma_obi_mon_c::observe_reset();
+task uvma_obi_memory_mon_c::observe_reset();
    
    forever begin
       wait (cfg.enabled);
@@ -177,9 +177,9 @@ task uvma_obi_mon_c::observe_reset();
       fork
          begin
             wait (cntxt.vif.reset_n === 0);
-            cntxt.reset_state = UVMA_OBI_RESET_STATE_IN_RESET;
+            cntxt.reset_state = UVMA_OBI_MEMORY_RESET_STATE_IN_RESET;
             wait (cntxt.vif.reset_n === 1);
-            cntxt.reset_state = UVMA_OBI_RESET_STATE_POST_RESET;
+            cntxt.reset_state = UVMA_OBI_MEMORY_RESET_STATE_POST_RESET;
          end
          
          begin
@@ -192,23 +192,23 @@ task uvma_obi_mon_c::observe_reset();
 endtask : observe_reset
 
 
-task uvma_obi_mon_c::mon_pre_reset(uvm_phase phase);
+task uvma_obi_memory_mon_c::mon_pre_reset(uvm_phase phase);
    
    @(vif_passive_mp.mon_cb);
    
 endtask : mon_pre_reset
 
 
-task uvma_obi_mon_c::mon_in_reset(uvm_phase phase);
+task uvma_obi_memory_mon_c::mon_in_reset(uvm_phase phase);
    
    @(vif_passive_mp.mon_cb);
    
 endtask : mon_in_reset
 
 
-task uvma_obi_mon_c::mon_post_reset(uvm_phase phase);
+task uvma_obi_memory_mon_c::mon_post_reset(uvm_phase phase);
    
-   uvma_obi_mon_trn_c  trn;
+   uvma_obi_memory_mon_trn_c  trn;
    
    mon_trn(trn);
    `uvm_info("OBI_MON", $sformatf("monitored transaction:\n%s", trn.sprint()), UVM_MEDIUM/*HIGH*/)
@@ -219,7 +219,7 @@ task uvma_obi_mon_c::mon_post_reset(uvm_phase phase);
 endtask : mon_post_reset
 
 
-task uvma_obi_mon_c::mon_trn(output uvma_obi_mon_trn_c trn);
+task uvma_obi_memory_mon_c::mon_trn(output uvma_obi_memory_mon_trn_c trn);
    
    realtime  trn_start;
    
@@ -236,7 +236,7 @@ task uvma_obi_mon_c::mon_trn(output uvma_obi_mon_trn_c trn);
    
    // Address phase
    sample_trn_from_vif(trn);
-   if (cfg.enabled && cfg.is_active && (cfg.drv_mode == UVMA_OBI_MODE_SLV)) begin
+   if (cfg.enabled && cfg.is_active && (cfg.drv_mode == UVMA_OBI_MEMORY_MODE_SLV)) begin
       send_trn_to_sequencer(trn);
    end
    
@@ -274,7 +274,7 @@ task uvma_obi_mon_c::mon_trn(output uvma_obi_mon_trn_c trn);
 endtask : mon_trn
 
 
-function void uvma_obi_mon_c::process_trn(ref uvma_obi_mon_trn_c trn);
+function void uvma_obi_memory_mon_c::process_trn(ref uvma_obi_memory_mon_trn_c trn);
    
    trn.auser_width = cfg.auser_width;
    trn.wuser_width = cfg.wuser_width;
@@ -291,16 +291,16 @@ function void uvma_obi_mon_c::process_trn(ref uvma_obi_mon_trn_c trn);
 endfunction : process_trn
 
 
-task uvma_obi_mon_c::send_trn_to_sequencer(ref uvma_obi_mon_trn_c trn);
+task uvma_obi_memory_mon_c::send_trn_to_sequencer(ref uvma_obi_memory_mon_trn_c trn);
    
    sequencer_ap.write(trn);
    
 endtask : send_trn_to_sequencer
 
 
-task uvma_obi_mon_c::check_signals_same(ref uvma_obi_mon_trn_c trn);
+task uvma_obi_memory_mon_c::check_signals_same(ref uvma_obi_memory_mon_trn_c trn);
    
-   uvma_obi_mon_trn_c  new_trn;
+   uvma_obi_memory_mon_trn_c  new_trn;
    sample_trn_from_vif(new_trn);
    
    if (!trn.compare(new_trn)) begin
@@ -311,16 +311,16 @@ task uvma_obi_mon_c::check_signals_same(ref uvma_obi_mon_trn_c trn);
 endtask : check_signals_same
 
 
-task uvma_obi_mon_c::sample_trn_from_vif(output uvma_obi_mon_trn_c trn);
+task uvma_obi_memory_mon_c::sample_trn_from_vif(output uvma_obi_memory_mon_trn_c trn);
    
-   trn = uvma_obi_mon_trn_c::type_id::create("trn");
+   trn = uvma_obi_memory_mon_trn_c::type_id::create("trn");
    trn.__originator = this.get_full_name();
    
    if (vif_passive_mp.mon_cb.we === 1'b1) begin
-      trn.access_type = UVMA_OBI_ACCESS_WRITE;
+      trn.access_type = UVMA_OBI_MEMORY_ACCESS_WRITE;
    end
    else if (vif_passive_mp.mon_cb.we === 1'b0) begin
-      trn.access_type = UVMA_OBI_ACCESS_READ;
+      trn.access_type = UVMA_OBI_MEMORY_ACCESS_READ;
    end
    else begin
       `uvm_error("OBI_MON", $sformatf("Invalid value for we:%b", vif_passive_mp.mon_cb.we))
@@ -346,12 +346,12 @@ task uvma_obi_mon_c::sample_trn_from_vif(output uvma_obi_mon_trn_c trn);
       trn.id[ii] = vif_passive_mp.mon_cb.rid[ii];
    end
    
-   if (trn.access_type == UVMA_OBI_ACCESS_WRITE) begin
+   if (trn.access_type == UVMA_OBI_MEMORY_ACCESS_WRITE) begin
       for (int unsigned ii=0; ii<cfg.data_width; ii++) begin
          trn.data[ii] = vif_passive_mp.mon_cb.wdata[ii];
       end
    end
-   else if (trn.access_type == UVMA_OBI_ACCESS_READ) begin
+   else if (trn.access_type == UVMA_OBI_MEMORY_ACCESS_READ) begin
       for (int unsigned ii=0; ii<cfg.data_width; ii++) begin
          trn.data[ii] = vif_passive_mp.mon_cb.rdata[ii];
       end
@@ -364,4 +364,4 @@ task uvma_obi_mon_c::sample_trn_from_vif(output uvma_obi_mon_trn_c trn);
 endtask : sample_trn_from_vif
 
 
-`endif // __UVMA_OBI_MON_SV__
+`endif // __UVMA_OBI_MEMORY_MON_SV__

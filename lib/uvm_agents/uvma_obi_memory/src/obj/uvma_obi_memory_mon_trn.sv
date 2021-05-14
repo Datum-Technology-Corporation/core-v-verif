@@ -17,25 +17,25 @@
 // 
 
 
-`ifndef __UVMA_OBI_MON_TRN_SV__
-`define __UVMA_OBI_MON_TRN_SV__
+`ifndef __UVMA_OBI_MEMORY_MON_TRN_SV__
+`define __UVMA_OBI_MEMORY_MON_TRN_SV__
 
 
 /**
  * Object rebuilt from the Open Bus Interface monitor Analog of
- * uvma_obi_base_seq_item_c.
+ * uvma_obi_memory_base_seq_item_c.
  */
-class uvma_obi_mon_trn_c extends uvml_trn_mon_trn_c;
+class uvma_obi_memory_mon_trn_c extends uvml_trn_mon_trn_c;
    
    // Data
-   uvma_obi_access_type_enum  access_type; ///< Read or write
-   uvma_obi_addr_l_t          address    ; ///< Read/Write Address
-   uvma_obi_data_l_t          data       ; ///< Read/Write Data
-   uvma_obi_be_l_t            be         ; ///< Byte Enable. Is set for the bytes to write/read.
-   uvma_obi_auser_l_t         auser      ; ///< Address Phase User signals. Valid for both read and write transactions.
-   uvma_obi_wuser_l_t         wuser      ; ///< Additional Address Phase User signals. Only valid for write transactions.
-   uvma_obi_ruser_l_t         ruser      ; ///< Response phase User signals. Only valid for read transactions. Undefined for write transactions.
-   uvma_obi_id_l_t            id         ; ///< Address/Response Phase transaction identifier.
+   uvma_obi_memory_access_type_enum  access_type; ///< Read or write
+   uvma_obi_memory_addr_l_t          address    ; ///< Read/Write Address
+   uvma_obi_memory_data_l_t          data       ; ///< Read/Write Data
+   uvma_obi_memory_be_l_t            be         ; ///< Byte Enable. Is set for the bytes to write/read.
+   uvma_obi_memory_auser_l_t         auser      ; ///< Address Phase User signals. Valid for both read and write transactions.
+   uvma_obi_memory_wuser_l_t         wuser      ; ///< Additional Address Phase User signals. Only valid for write transactions.
+   uvma_obi_memory_ruser_l_t         ruser      ; ///< Response phase User signals. Only valid for read transactions. Undefined for write transactions.
+   uvma_obi_memory_id_l_t            id         ; ///< Address/Response Phase transaction identifier.
    bit                        err        ; ///< Error
    
    // Metadata
@@ -53,8 +53,8 @@ class uvma_obi_mon_trn_c extends uvml_trn_mon_trn_c;
    int unsigned  id_width   ;
    
    
-   `uvm_object_utils_begin(uvma_obi_mon_trn_c)
-      `uvm_field_enum(uvma_obi_access_type_enum, access_type, UVM_DEFAULT          )
+   `uvm_object_utils_begin(uvma_obi_memory_mon_trn_c)
+      `uvm_field_enum(uvma_obi_memory_access_type_enum, access_type, UVM_DEFAULT          )
       `uvm_field_int (                           address    , UVM_DEFAULT          )
       `uvm_field_int (                           data       , UVM_DEFAULT          )
       `uvm_field_int (                           be         , UVM_DEFAULT + UVM_BIN)
@@ -74,16 +74,16 @@ class uvma_obi_mon_trn_c extends uvml_trn_mon_trn_c;
    /**
     * Default constructor.
     */
-   extern function new(string name="uvma_obi_mon_trn");
+   extern function new(string name="uvma_obi_memory_mon_trn");
    
-endclass : uvma_obi_mon_trn_c
+endclass : uvma_obi_memory_mon_trn_c
 
 
-function uvma_obi_mon_trn_c::new(string name="uvma_obi_mon_trn");
+function uvma_obi_memory_mon_trn_c::new(string name="uvma_obi_memory_mon_trn");
    
    super.new(name);
    
 endfunction : new
 
 
-`endif // __UVMA_OBI_MON_TRN_SV__
+`endif // __UVMA_OBI_MEMORY_MON_TRN_SV__

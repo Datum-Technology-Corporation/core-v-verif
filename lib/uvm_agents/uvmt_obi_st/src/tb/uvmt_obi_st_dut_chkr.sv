@@ -25,8 +25,8 @@
  * Self-Testing DUT wrapper (uvmt_obi_st_dut_wrap).
  */
 module uvmt_obi_st_dut_chkr(
-   uvma_obi_if  mstr_if,
-   uvma_obi_if  slv_if
+   uvma_obi_memory_if  mstr_if,
+   uvma_obi_memory_if  slv_if
 );
    
    // TODO Add assertions to uvmt_obi_st_dut_chkr

@@ -17,20 +17,20 @@
 // 
 
 
-`ifndef __UVMA_OBI_SLV_SEQ_ITEM_SV__
-`define __UVMA_OBI_SLV_SEQ_ITEM_SV__
+`ifndef __UVMA_OBI_MEMORY_SLV_SEQ_ITEM_SV__
+`define __UVMA_OBI_MEMORY_SLV_SEQ_ITEM_SV__
 
 
 /**
  * Object created by Open Bus Interface agent sequences extending
- * uvma_obi_slv_seq_base_c.
+ * uvma_obi_memory_slv_seq_base_c.
  */
-class uvma_obi_slv_seq_item_c extends uvma_obi_base_seq_item_c;
+class uvma_obi_memory_slv_seq_item_c extends uvma_obi_memory_base_seq_item_c;
    
    // Data
-   rand uvma_obi_data_b_t   rdata; ///< Read data.
-   rand uvma_obi_ruser_b_t  ruser; ///< Response phase User signals. Only valid for read transactions. Undefined for write transactions.
-   rand uvma_obi_id_b_t     rid  ; ///< Response Phase transaction identifier.
+   rand uvma_obi_memory_data_b_t   rdata; ///< Read data.
+   rand uvma_obi_memory_ruser_b_t  ruser; ///< Response phase User signals. Only valid for read transactions. Undefined for write transactions.
+   rand uvma_obi_memory_id_b_t     rid  ; ///< Response Phase transaction identifier.
    rand bit                 err  ; ///< Error.
    
    // Metadata
@@ -38,10 +38,10 @@ class uvma_obi_slv_seq_item_c extends uvma_obi_base_seq_item_c;
    rand int unsigned   access_latency; ///< Measured in clock cycles
    rand int unsigned   hold_duration ; ///< Measured in clock cycles
    rand int unsigned   tail_length   ; ///< Measured in clock cycles
-   uvma_obi_mon_trn_c  orig_trn      ; ///< Monitored transaction to which this seq_item is responding
+   uvma_obi_memory_mon_trn_c  orig_trn      ; ///< Monitored transaction to which this seq_item is responding
    
    
-   `uvm_object_utils_begin(uvma_obi_slv_seq_item_c)
+   `uvm_object_utils_begin(uvma_obi_memory_slv_seq_item_c)
       `uvm_field_int(rdata , UVM_DEFAULT)
       `uvm_field_int(ruser , UVM_DEFAULT)
       `uvm_field_int(rid   , UVM_DEFAULT)
@@ -68,7 +68,7 @@ class uvma_obi_slv_seq_item_c extends uvma_obi_base_seq_item_c;
     * Describe rules_cons
     */
    constraint rules_cons {
-      mode == UVMA_OBI_MODE_SLV;
+      mode == UVMA_OBI_MEMORY_MODE_SLV;
    }
 
    
@@ -76,16 +76,16 @@ class uvma_obi_slv_seq_item_c extends uvma_obi_base_seq_item_c;
    /**
     * Default constructor.
     */
-   extern function new(string name="uvma_obi_slv_seq_item");
+   extern function new(string name="uvma_obi_memory_slv_seq_item");
    
-endclass : uvma_obi_slv_seq_item_c
+endclass : uvma_obi_memory_slv_seq_item_c
 
 
-function uvma_obi_slv_seq_item_c::new(string name="uvma_obi_slv_seq_item");
+function uvma_obi_memory_slv_seq_item_c::new(string name="uvma_obi_memory_slv_seq_item");
    
    super.new(name);
    
 endfunction : new
 
 
-`endif // __UVMA_OBI_SLV_SEQ_ITEM_SV__
+`endif // __UVMA_OBI_MEMORY_SLV_SEQ_ITEM_SV__

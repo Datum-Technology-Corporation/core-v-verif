@@ -17,15 +17,15 @@
 // 
 
 
-`ifndef __UVMA_OBI_CFG_SV__
-`define __UVMA_OBI_CFG_SV__
+`ifndef __UVMA_OBI_MEMORY_CFG_SV__
+`define __UVMA_OBI_MEMORY_CFG_SV__
 
 
 /**
  * Object encapsulating all parameters for creating, connecting and running all
- * Open Bus Interface agent (uvma_obi_agent_c) components.
+ * Open Bus Interface agent (uvma_obi_memory_agent_c) components.
  */
-class uvma_obi_cfg_c extends uvm_object;
+class uvma_obi_memory_cfg_c extends uvm_object;
    
    // Generic options
    rand bit                      enabled;
@@ -41,11 +41,11 @@ class uvma_obi_cfg_c extends uvm_object;
    rand int unsigned            addr_width ;
    rand int unsigned            data_width ;
    rand int unsigned            id_width   ;
-   rand uvma_obi_mode_enum      drv_mode   ;
-   rand uvma_obi_drv_idle_enum  drv_idle   ;
+   rand uvma_obi_memory_mode_enum      drv_mode   ;
+   rand uvma_obi_memory_drv_idle_enum  drv_idle   ;
    
    
-   `uvm_object_utils_begin(uvma_obi_cfg_c)
+   `uvm_object_utils_begin(uvma_obi_memory_cfg_c)
       `uvm_field_int (                         enabled          , UVM_DEFAULT)
       `uvm_field_enum(uvm_active_passive_enum, is_active        , UVM_DEFAULT)
       `uvm_field_enum(uvm_sequencer_arb_mode , sqr_arb_mode     , UVM_DEFAULT)
@@ -59,8 +59,8 @@ class uvma_obi_cfg_c extends uvm_object;
       `uvm_field_int (                        addr_width , UVM_DEFAULT + UVM_DEC)
       `uvm_field_int (                        data_width , UVM_DEFAULT + UVM_DEC)
       `uvm_field_int (                        id_width   , UVM_DEFAULT + UVM_DEC)
-      `uvm_field_enum(uvma_obi_mode_enum    , drv_mode   , UVM_DEFAULT          )
-      `uvm_field_enum(uvma_obi_drv_idle_enum, drv_idle   , UVM_DEFAULT          )
+      `uvm_field_enum(uvma_obi_memory_mode_enum    , drv_mode   , UVM_DEFAULT          )
+      `uvm_field_enum(uvma_obi_memory_drv_idle_enum, drv_idle   , UVM_DEFAULT          )
    `uvm_object_utils_end
    
    
@@ -71,30 +71,30 @@ class uvma_obi_cfg_c extends uvm_object;
       soft cov_model_enabled == 0;
       soft trn_log_enabled   == 1;
       
-      /*soft*/ auser_width  == uvma_obi_default_auser_width;
-      /*soft*/ wuser_width  == uvma_obi_default_wuser_width;
-      /*soft*/ ruser_width  == uvma_obi_default_ruser_width;
-      /*soft*/ addr_width   == uvma_obi_default_addr_width ;
-      /*soft*/ data_width   == uvma_obi_default_data_width ;
-      /*soft*/ id_width     == uvma_obi_default_id_width   ;
-      soft drv_mode     == UVMA_OBI_MODE_MSTR;
-      soft drv_idle     == UVMA_OBI_DRV_IDLE_ZEROS;
+      /*soft*/ auser_width  == uvma_obi_memory_default_auser_width;
+      /*soft*/ wuser_width  == uvma_obi_memory_default_wuser_width;
+      /*soft*/ ruser_width  == uvma_obi_memory_default_ruser_width;
+      /*soft*/ addr_width   == uvma_obi_memory_default_addr_width ;
+      /*soft*/ data_width   == uvma_obi_memory_default_data_width ;
+      /*soft*/ id_width     == uvma_obi_memory_default_id_width   ;
+      soft drv_mode     == UVMA_OBI_MEMORY_MODE_MSTR;
+      soft drv_idle     == UVMA_OBI_MEMORY_DRV_IDLE_ZEROS;
    }
    
    
    /**
     * Default constructor.
     */
-   extern function new(string name="uvma_obi_cfg");
+   extern function new(string name="uvma_obi_memory_cfg");
    
-endclass : uvma_obi_cfg_c
+endclass : uvma_obi_memory_cfg_c
 
 
-function uvma_obi_cfg_c::new(string name="uvma_obi_cfg");
+function uvma_obi_memory_cfg_c::new(string name="uvma_obi_memory_cfg");
    
    super.new(name);
    
 endfunction : new
 
 
-`endif // __UVMA_OBI_CFG_SV__
+`endif // __UVMA_OBI_MEMORY_CFG_SV__
