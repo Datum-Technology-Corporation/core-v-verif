@@ -64,6 +64,7 @@ rtl_path        = project_dir + "/rtl"
 rtl_libs_path   = rtl_path + "/.imports"
 uvm_agents_path = project_dir + "/lib/uvm_agents"
 dv_imports_path = project_dir + "/lib/uvm_libs/mio"
+mio_base_libs_url = "https://github.com/Datum-Technology-Corporation/mio_ip_base.git -b ohwg"
 sim_debug       = False
 sim_gui         = False
 sim_waves       = False
@@ -348,7 +349,7 @@ def do_update():
         os.mkdir(temp_path)
     
     # Clone repo(s) and remove extra dirs
-    subprocess.call("git clone https://github.com/Datum-Technology-Corporation/mio_ip_base.git " + temp_path + "/mio_ip_base", shell=True)
+    subprocess.call("git clone " + mio_base_libs_url + " " + temp_path + "/mio_ip_base", shell=True)
     
     if os.path.exists(temp_path + "/mio_ip_base/dv/.imports"):
         shutil.rmtree(temp_path + "/mio_ip_base/dv/.imports")
