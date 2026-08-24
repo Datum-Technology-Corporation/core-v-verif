@@ -358,6 +358,9 @@ isacov_logdiff:
 #ifeq ($(SIMULATOR), unsim)
 #include unsim.mk
 #else
+ifeq ($(SIMULATOR), isim)
+include $(CORE_V_VERIF)/mk/uvmt/isim.mk
+else
 ifeq ($(SIMULATOR), dsim)
 include $(CORE_V_VERIF)/mk/uvmt/dsim.mk
 else
@@ -374,6 +377,7 @@ ifeq ($(SIMULATOR), riviera)
 include $(CORE_V_VERIF)/mk/uvmt/riviera.mk
 else
 include $(CORE_V_VERIF)/mk/uvmt/unsim.mk
+endif
 endif
 endif
 endif
