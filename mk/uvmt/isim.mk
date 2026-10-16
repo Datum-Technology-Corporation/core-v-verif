@@ -48,14 +48,14 @@
 # HOW THE FILE LIST REACHES iSim.  uvmt_cv32e40p.flist is handed to
 # `isim-vlog -f` as written: nested `-f`, `+incdir+` and the `${DV_*}` paths
 # are read by the analyser, with this makefile's exported variables in its
-# environment -- exactly as for dsim.  $(ISIM_BUILD), a script in the iSim
-# tree, still exists for two things that are about WHICH lines, not about
-# reading them: cutting the list at one of the `//` section headers below
-# (the analyse_* ladder), and dropping the files it declares skipped by name
-# (svlib_pkg.sv, cloned at build time rather than pinned).  Earlier versions
-# of this header blamed two iSim defects for the script's existence; both
-# were fixed in August 2026 and the last gap (`${VAR}` in a command file) in
-# October 2026.
+# environment -- exactly as for dsim.  $(ISIM_BUILD) -- mk/uvmt/isim_build.py,
+# beside this file -- still exists for two things that are about WHICH lines,
+# not about reading them: cutting the list at one of the `//` section headers
+# below (the analyse_* ladder), and dropping the files it declares skipped by
+# name (svlib_pkg.sv, cloned at build time rather than pinned).  Earlier
+# versions of this header blamed two iSim defects for the script's existence;
+# both were fixed in August 2026 and the last gap (`${VAR}` in a command file)
+# in October 2026.
 #
 ###############################################################################
 
@@ -71,10 +71,9 @@ ISIM_UVM_VERSION       ?= 1.2
 ISIM_WORK              ?= $(SIM_CFG_RESULTS)/isim_work
 ISIM_IMAGE             ?= $(ISIM_WORK)/a.out.so
 
-# The list driver described above.  It lives in the iSim tree
-# (test_piles/integration/bin/core_v_verif_build.py).  There is no default: a
-# wrong guess would produce a confusing failure a long way from its cause.
-ISIM_BUILD             ?=
+# The list driver described above, beside this file.  Override it to run a
+# modified copy; the iSim tree's integration pile overrides nothing.
+ISIM_BUILD             ?= python3 $(CORE_V_VERIF)/mk/uvmt/isim_build.py
 
 # The .so behind imperas_CV32.sv's DPI-C imports: the licensed OVPsim model,
 # or the iSim tree's stub.  Required by `test`; see the header.
@@ -110,9 +109,7 @@ mk_results:
 
 check_isim_build:
 	@if [ -z "$(ISIM_BUILD)" ]; then \
-	    echo "SIMULATOR=isim needs ISIM_BUILD set to core_v_verif_build.py"; \
-	    echo "  (test_piles/integration/bin/ in the iSim tree). See the"; \
-	    echo "  comment at the top of mk/uvmt/isim.mk for what it does."; \
+	    echo "SIMULATOR=isim needs ISIM_BUILD (the list driver, mk/uvmt/isim_build.py)"; \
 	    exit 1; \
 	fi
 
