@@ -39,11 +39,11 @@
 # reference model behind imperas_CV32.sv's DPI-C imports.  Its SV layer is
 # vendored (vendor_lib/imperas) and compiles; the OVPsim runtime .so is
 # licensed and not fetchable here.  $(ISIM_OVP_MODEL_DPI) is whatever .so
-# satisfies those imports: the real model where it is licensed, or the stub
-# the iSim tree ships (test_piles/integration/support/ovpsim_dpi_stub.c),
-# which announces itself in the log as "reference model STUBBED" and compares
-# nothing.  There is no default, so a run cannot quietly compare against
-# nothing without the log saying so.
+# satisfies those imports: the real model where it is licensed, or -- the
+# default -- the stub beside this file (mk/uvmt/ovpsim_dpi_stub.c), built into
+# the results directory by `test`, which announces itself in the log as
+# "reference model STUBBED" and compares nothing.  A run can never quietly
+# compare against nothing: the log says so on every run of the stub.
 #
 # HOW THE FILE LIST REACHES iSim.  uvmt_cv32e40p.flist is handed to
 # `isim-vlog -f` as written: nested `-f`, `+incdir+` and the `${DV_*}` paths
@@ -75,9 +75,13 @@ ISIM_IMAGE             ?= $(ISIM_WORK)/a.out.so
 # modified copy; the iSim tree's integration pile overrides nothing.
 ISIM_BUILD             ?= python3 $(CORE_V_VERIF)/mk/uvmt/isim_build.py
 
-# The .so behind imperas_CV32.sv's DPI-C imports: the licensed OVPsim model,
-# or the iSim tree's stub.  Required by `test`; see the header.
-ISIM_OVP_MODEL_DPI     ?=
+# The .so behind imperas_CV32.sv's DPI-C imports.  Point it at the licensed
+# OVPsim model to run the reference model; left at its default, `test` builds
+# mk/uvmt/ovpsim_dpi_stub.c (beside this file) into the results directory --
+# the bench LOADS and RUNS with the step-compare machinery inert, which is what
+# every simulator without the licence runs.  See the header.
+ISIM_OVP_STUB_SRC      ?= $(CORE_V_VERIF)/mk/uvmt/ovpsim_dpi_stub.c
+ISIM_OVP_MODEL_DPI     ?= $(SIM_CFG_RESULTS)/ovpsim_dpi_stub.so
 
 # A checkout of the CV32E40P RTL.  Defaults to the tree ExternalRepos.mk
 # clones; override it to point at an existing checkout and no clone is
@@ -100,7 +104,7 @@ help:
 	@echo '  analyse_uvmt   the above + uvmt_$(CV_CORE_LC)_pkg, dut_wrap.sv and both'
 	@echo '                 _assert.sv files, EXCLUDING uvmt_$(CV_CORE_LC)_tb.sv'
 	@echo '  comp           the whole bench, uvmt_$(CV_CORE_LC)_tb elaborated to an image'
-	@echo '  test           run TEST=<name> in that image (needs ISIM_OVP_MODEL_DPI)'
+	@echo '  test           run TEST=<name> in that image (the OVPsim DPI stub unless ISIM_OVP_MODEL_DPI)'
 	$(ISIM_VLOG) -help
 
 mk_results:
@@ -113,12 +117,16 @@ check_isim_build:
 	    exit 1; \
 	fi
 
-check_isim_ovp_model:
-	@if [ -z "$(ISIM_OVP_MODEL_DPI)" ]; then \
-	    echo "SIMULATOR=isim test needs ISIM_OVP_MODEL_DPI: the .so behind"; \
-	    echo "  imperas_CV32.sv's DPI-C imports -- the licensed OVPsim model, or"; \
-	    echo "  the stub in the iSim tree (test_piles/integration/support/"; \
-	    echo "  ovpsim_dpi_stub.c, built with cc -shared -fPIC). See the header."; \
+# The default .so is the stub, built here from the source beside this file;
+# an overridden ISIM_OVP_MODEL_DPI is checked to exist and never built.
+$(SIM_CFG_RESULTS)/ovpsim_dpi_stub.so: $(ISIM_OVP_STUB_SRC) | mk_results
+	$(CC) -shared -fPIC -o $@ $<
+
+check_isim_ovp_model: $(if $(filter $(SIM_CFG_RESULTS)/ovpsim_dpi_stub.so,$(ISIM_OVP_MODEL_DPI)),$(ISIM_OVP_MODEL_DPI))
+	@if [ ! -f "$(ISIM_OVP_MODEL_DPI)" ]; then \
+	    echo "SIMULATOR=isim test: ISIM_OVP_MODEL_DPI=$(ISIM_OVP_MODEL_DPI) does not exist --"; \
+	    echo "  the .so behind imperas_CV32.sv's DPI-C imports (the licensed OVPsim"; \
+	    echo "  model); leave it unset and the stub beside isim.mk is built instead."; \
 	    exit 1; \
 	fi
 
@@ -127,18 +135,18 @@ check_isim_ovp_model:
 # comment inside uvmt_$(CV_CORE_LC).flist, and the driver refuses if that
 # header is no longer there rather than silently analysing a different set.
 
-analyse_uvml: mk_results check_isim_build
-	$(ISIM_BUILD) --root $(abspath $(CORE_V_VERIF)/..) --stage analyse \
+analyse_uvml: mk_results check_isim_build $(ISIM_CV_CORE)
+	$(ISIM_BUILD) --checkout $(CORE_V_VERIF) --stage analyse \
 		--upto Libraries --uvm $(ISIM_UVM_VERSION) \
 		--isim-vlog $(ISIM_VLOG) --work $(ISIM_WORK)
 
-analyse_uvma: mk_results check_isim_build
-	$(ISIM_BUILD) --root $(abspath $(CORE_V_VERIF)/..) --stage analyse \
+analyse_uvma: mk_results check_isim_build $(ISIM_CV_CORE)
+	$(ISIM_BUILD) --checkout $(CORE_V_VERIF) --stage analyse \
 		--upto Agents --uvm $(ISIM_UVM_VERSION) \
 		--isim-vlog $(ISIM_VLOG) --work $(ISIM_WORK)
 
-analyse_uvme: mk_results check_isim_build
-	$(ISIM_BUILD) --root $(abspath $(CORE_V_VERIF)/..) --stage analyse \
+analyse_uvme: mk_results check_isim_build $(ISIM_CV_CORE)
+	$(ISIM_BUILD) --checkout $(CORE_V_VERIF) --stage analyse \
 		--upto Environments --uvm $(ISIM_UVM_VERSION) \
 		--isim-vlog $(ISIM_VLOG) --work $(ISIM_WORK) \
 		--cv-core $(ISIM_CV_CORE)
@@ -148,8 +156,8 @@ analyse_uvme: mk_results check_isim_build
 # bench files" / "FIXME:STR:Find a better location" flist sections -- and
 # stops short of uvmt_$(CV_CORE_LC)_tb.sv, which `comp` adds together with
 # the vendored OVPM SV layer (imperas_iss.flist).
-analyse_uvmt: mk_results check_isim_build
-	$(ISIM_BUILD) --root $(abspath $(CORE_V_VERIF)/..) --stage analyse \
+analyse_uvmt: mk_results check_isim_build $(ISIM_CV_CORE)
+	$(ISIM_BUILD) --checkout $(CORE_V_VERIF) --stage analyse \
 		--upto "FIXME:STR:Find a better location" --uvm $(ISIM_UVM_VERSION) \
 		--isim-vlog $(ISIM_VLOG) --work $(ISIM_WORK) \
 		--cv-core $(ISIM_CV_CORE)
@@ -157,8 +165,13 @@ analyse_uvmt: mk_results check_isim_build
 ################################################################################
 # `comp` -- the whole bench: the RTL, every flist section, uvmt_$(CV_CORE_LC)_tb
 # and the vendored OVPM SV layer, elaborated to $(ISIM_IMAGE).
-comp: mk_results check_isim_build
-	$(ISIM_BUILD) --root $(abspath $(CORE_V_VERIF)/..) --stage elaborate \
+# `comp` is a FULL recompile, as dsim.mk's is: the work library is emptied
+# first.  Re-analysing into a library that already holds the bench met its
+# own cv32e40p_pkg twice (MEASURED 2026-10-18 on `make test` after `make
+# comp`, github#3565) -- and a recompile that reuses stale units is not one.
+comp: mk_results check_isim_build $(ISIM_CV_CORE)
+	rm -rf $(ISIM_WORK) && $(MKDIR_P) $(ISIM_WORK)
+	$(ISIM_BUILD) --checkout $(CORE_V_VERIF) --stage elaborate \
 		--upto "FIXME:STR:Find a better location" --with-iss-sv \
 		--uvm $(ISIM_UVM_VERSION) \
 		--isim-vlog $(ISIM_VLOG) --isim-elab $(ISIM_ELAB) --work $(ISIM_WORK) \
