@@ -2,7 +2,7 @@
 """The list driver behind mk/uvmt/isim.mk: drive iSim over THIS checkout's own
 file lists, cut where the makefile asks.
 
-    isim_build.py --root <dir holding core_v_verif/> --stage analyse|elaborate \
+    isim_build.py --checkout <this core-v-verif checkout> --stage analyse|elaborate \
                   --upto <SECTION> --isim-vlog <path> --work <dir> [--cv-core <dir>]
 
 isim.mk's targets call it (ISIM_BUILD defaults to this file).  The bench
@@ -403,7 +403,13 @@ def analyse_cv_core(cv_core, isim_vlog, work, want_hash, uvm):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--root", required=True, help="the integration checkout root")
+    where = ap.add_mutually_exclusive_group(required=True)
+    where.add_argument("--checkout",
+                       help="THIS core-v-verif checkout, by any name -- what "
+                            "mk/uvmt/isim.mk passes ($(CORE_V_VERIF))")
+    where.add_argument("--root",
+                       help="the iSim integration pile's layout: the directory "
+                            "that HOLDS a checkout named core_v_verif/")
     ap.add_argument("--stage", required=True,
                     choices=("analyse", "elaborate"))
     ap.add_argument("--upto", required=True,
@@ -432,9 +438,18 @@ def main():
     # the other grades a lie.
     sys.stdout.reconfigure(line_buffering=True)
 
-    checkout = Path(a.root) / "core_v_verif"
-    if not checkout.is_dir():
-        red(f"no checkout at {checkout} (--root is the directory that HOLDS core_v_verif/)")
+    # MEASURED 2026-10-18 on a user's own clone (directory named `master`):
+    # the driver insisted on <root>/core_v_verif/ -- the iSim integration
+    # pile's layout -- and refused every checkout not named that.  isim.mk
+    # now hands over the checkout itself; --root stays for the pile.
+    if a.checkout is not None:
+        checkout = Path(a.checkout)
+        if not (checkout / FLIST).is_file():
+            red(f"--checkout {checkout} is not a core-v-verif checkout: no {FLIST} in it")
+    else:
+        checkout = Path(a.root) / "core_v_verif"
+        if not checkout.is_dir():
+            red(f"no checkout at {checkout} (--root is the directory that HOLDS core_v_verif/)")
 
     if a.stage == "elaborate":
         # the top instantiates the ISS wrapper unconditionally in this
