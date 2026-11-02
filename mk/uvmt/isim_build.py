@@ -166,7 +166,7 @@ ISS_FLIST = f"{CORE}/tb/uvmt/imperas_iss.flist"
 
 # THE DEFINES UPSTREAM'S OWN uvmt FLOW PASSES, mirrored -- not invented:
 # mk/uvmt/uvmt.mk's SV_CMP_FLAGS carries +define+CV32E40P_ASSERT_ON for
-# EVERY simulator, and each per-simulator mk (dsim.mk:39, vcs.mk:170,
+# EVERY simulator, and each per-simulator mk (vcs.mk:170,
 # riviera.mk:79) adds +define+CV32E40P_TRACE_EXECUTION -- without it the
 # wrapper's `ifdef-gated cv32e40p_tracer never exists and every
 # step_compare / iss_wrap cross-module reference into tracer_i fails to
@@ -180,7 +180,7 @@ UPSTREAM_DEFINES = [
     # tool default 1ns/1ns folds every bare `* 1ps` literal to ZERO --
     # MEASURED: uvme_cv32e40p_reset_vseq started the clock with period
     # `cfg.sys_clk_period * 1ps` == 0 and the core never executed a
-    # single instruction (identically degenerate under dsim without the
+    # single instruction (identically degenerate under the reference simulator without the
     # flag, which is why the early differential quietly matched).
     # Spelled as a list so both the vlog and elab command lines share it:
     # the elaborate stage re-parses stored bodies and must fold time the
