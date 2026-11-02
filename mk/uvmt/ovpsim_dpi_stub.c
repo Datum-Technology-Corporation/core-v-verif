@@ -6,8 +6,8 @@
  * not present on this infrastructure.  This stub satisfies the DPI
  * imports so the uvmt TB LOADS and RUNS -- the reference model simply
  * never executes, which makes the step-compare machinery inert.  That
- * is DIFFERENTIAL-VALID: dsim cannot run the reference model without
- * the licence either, so both simulators run the same stubbed bench
+ * is DIFFERENTIAL-VALID: the reference simulator cannot run the model
+ * without the licence either, so both run the same stubbed bench
  * (see test_piles/integration/README.md).
  *
  * The DPI EXPORTS the real OVPsim would call back (svexp_busFetch and

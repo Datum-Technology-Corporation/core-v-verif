@@ -48,7 +48,7 @@
 # HOW THE FILE LIST REACHES iSim.  uvmt_cv32e40p.flist is handed to
 # `isim-vlog -f` as written: nested `-f`, `+incdir+` and the `${DV_*}` paths
 # are read by the analyser, with this makefile's exported variables in its
-# environment -- exactly as for dsim.  $(ISIM_BUILD) -- mk/uvmt/isim_build.py,
+# environment -- as the other simulators' makefiles do.  $(ISIM_BUILD) -- mk/uvmt/isim_build.py,
 # beside this file -- still exists for two things that are about WHICH lines,
 # not about reading them: cutting the list at one of the `//` section headers
 # below (the analyse_* ladder), and dropping the files it declares skipped by
@@ -165,7 +165,7 @@ analyse_uvmt: mk_results check_isim_build $(ISIM_CV_CORE)
 ################################################################################
 # `comp` -- the whole bench: the RTL, every flist section, uvmt_$(CV_CORE_LC)_tb
 # and the vendored OVPM SV layer, elaborated to $(ISIM_IMAGE).
-# `comp` is a FULL recompile, as dsim.mk's is: the work library is emptied
+# `comp` is a FULL recompile: the work library is emptied
 # first.  Re-analysing into a library that already holds the bench met its
 # own cv32e40p_pkg twice (MEASURED 2026-10-18 on `make test` after `make
 # comp`, github#3565) -- and a recompile that reuses stale units is not one.
@@ -183,7 +183,7 @@ ISIM_SIM_PREREQ = comp
 endif
 
 ################################################################################
-# `test` -- the same shape as dsim.mk's: the firmware the `hex` target built,
+# `test` -- the same shape as the other simulators': the firmware `hex` built,
 # the UVM test the test's YAML names, in the run directory uvmt.mk lays out.
 # One image, built once by `comp`, is reused across tests.
 test: $(ISIM_SIM_PREREQ) check_isim_ovp_model hex
